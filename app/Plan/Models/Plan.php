@@ -1,10 +1,15 @@
 <?php
 
-namespace App\Subscriptions\Models;
+namespace App\Accounts\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Laravel\Passport\HasApiTokens;
 
-class Addon extends Model
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Illuminate\Foundation\Auth\User as Authenticatable;
+
+class Plan extends Model
 {
     use HasApiTokens, Notifiable;
 
@@ -13,7 +18,7 @@ class Addon extends Model
      *
      * @var string
      */
-    protected $table = 'q2_addons';
+    protected $table = 'q2_plans';
 
     /**
      * The attributes that are mass assignable.
