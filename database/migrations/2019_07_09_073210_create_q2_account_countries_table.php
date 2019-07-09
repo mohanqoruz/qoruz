@@ -22,9 +22,7 @@ class CreateQ2AccountCountriesTable extends Migration
             $table->boolean('is_active')->default(0);
 
             $table->unique(['account_id','country_id']);
-            $table->foreign('account_id')->references('id')->on('q2_accounts')->onDelete('cascade');
-            $table->foreign('country_id')->references('id')->on('country')->onDelete('cascade');
-
+            
             $table->timestamps();
         });
     }
