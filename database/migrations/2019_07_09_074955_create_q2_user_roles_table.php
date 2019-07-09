@@ -21,8 +21,8 @@ class CreateQ2UserRolesTable extends Migration
 
             $table->unique(['account_id','user_id','role_id']);
             $table->foreign('account_id')->references('id')->on('q2_accounts')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('q2_users')->onDelete('cascade');
+            $table->foreign('role_id')->references('id')->on('q2_roles')->onDelete('cascade');
         });
     }
 

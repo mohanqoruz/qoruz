@@ -14,7 +14,7 @@ class CreateQ2UsersTable extends Migration
     public function up()
     {
         Schema::create('q2_users', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->unsignedInteger('account_id');
 
             $table->string('name');
