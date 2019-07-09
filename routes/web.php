@@ -12,9 +12,9 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return [
+        "app_name" => "Qoruz API",
+        "vesrion" => "v.0.1-beta"
+    ];
 });
 
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
