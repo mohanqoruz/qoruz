@@ -13,6 +13,7 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
+<<<<<<< HEAD
        /* Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
@@ -22,6 +23,17 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
         });*/
+=======
+        // Schema::create('users', function (Blueprint $table) {
+        //     $table->bigIncrements('id');
+        //     $table->string('name');
+        //     $table->string('email')->unique();
+        //     $table->timestamp('email_verified_at')->nullable();
+        //     $table->string('password');
+        //     $table->rememberToken();
+        //     $table->timestamps();
+        // });
+>>>>>>> a3b790c9c12635c8f00446ff4082f28f384594ea
     }
 
     /**
@@ -31,6 +43,10 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
+<<<<<<< HEAD
         //Schema::dropIfExists('users');
+=======
+        // Schema::dropIfExists('users');
+>>>>>>> a3b790c9c12635c8f00446ff4082f28f384594ea
     }
 }

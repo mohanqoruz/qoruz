@@ -14,7 +14,7 @@ class CreateQ2RolesTable extends Migration
     public function up()
     {
         Schema::create('q2_roles', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string('name');
             $table->string('slug')->unique();
             $table->jsonb('permissions')->nullable(); // jsonb deletes duplicates

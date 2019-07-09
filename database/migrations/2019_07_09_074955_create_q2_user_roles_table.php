@@ -20,7 +20,11 @@ class CreateQ2UserRolesTable extends Migration
             $table->timestamps();
 
             $table->unique(['account_id','user_id','role_id']);
+<<<<<<< HEAD
            
+=======
+            $table->foreign('account_id')->references('id')->on('q2_accounts')->onDelete('cascade');
+>>>>>>> a3b790c9c12635c8f00446ff4082f28f384594ea
             $table->foreign('user_id')->references('id')->on('q2_users')->onDelete('cascade');
             $table->foreign('role_id')->references('id')->on('q2_roles')->onDelete('cascade');
         });
