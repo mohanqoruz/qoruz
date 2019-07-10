@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Users\Models;
 
 use App\Roles\Traits\HasRoles;
 use App\Accounts\Traits\Accountable;

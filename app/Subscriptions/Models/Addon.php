@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Addon extends Model
 {
-    use  Notifiable;
 
     /**
      * The table associated with the model.

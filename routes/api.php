@@ -16,3 +16,19 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+Route::prefix('v1')->group(function () {
+
+    /**
+     * 
+     * Register user via signup form => @return API Token
+     * Login user using email and password  => @return API Token
+     * 
+     */
+    Route::post('register', 'Auth\ApiAuthController@register');
+    Route::post('login', 'Auth\ApiAuthController@login');  
+    Route::get('logout', 'Auth\ApiAuthController@logout');
+    Route::get('user', 'Auth\ApiAuthController@user');
+
+});
