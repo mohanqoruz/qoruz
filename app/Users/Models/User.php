@@ -2,15 +2,18 @@
 
 namespace App;
 
+use App\Roles\Traits\HasRoles;
+use App\Accounts\Traits\Accountable;
 use Laravel\Passport\HasApiTokens;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+
 class User extends Authenticatable
 {
-    use HasApiTokens, Notifiable;
+    use HasApiTokens, Notifiable, HasRoles, Accountable;
 
     /**
      * The table associated with the model.

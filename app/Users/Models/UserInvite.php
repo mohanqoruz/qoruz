@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserInvite extends Model
 {
-    use HasApiTokens, Notifiable;
+    use  Notifiable;
 
     /**
      * The table associated with the model.

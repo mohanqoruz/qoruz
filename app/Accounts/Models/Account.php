@@ -2,8 +2,6 @@
 
 namespace App\Accounts\Models;
 
-use Laravel\Passport\HasApiTokens;
-
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 
@@ -11,7 +9,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Account extends Model
 {
-    use HasApiTokens, Notifiable;
+    use  Notifiable;
 
     /**
      * The table associated with the model.
@@ -26,7 +24,7 @@ class Account extends Model
      * @var array
      */
     protected $fillable = [
-        
+       
     ];
 
     /**

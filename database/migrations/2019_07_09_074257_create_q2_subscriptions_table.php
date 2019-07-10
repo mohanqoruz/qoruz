@@ -28,7 +28,7 @@ class CreateQ2SubscriptionsTable extends Migration
             $table->dateTime('start_at'); 
             $table->dateTime('ends_at'); 
 
-            $table->boolean('status')->default('0');  
+            $table->boolean('status')->default('1');  
 
             $table->timestamps();
             $table->softDeletes();
