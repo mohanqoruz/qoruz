@@ -14,7 +14,7 @@
 Route::get('/', function () {
     return [
         "app_name" => "Qoruz API",
-        "vesrion" => "v.0.1-beta"
+        "vesrion" => "v.0.1-beta-1"
     ];
 });
 

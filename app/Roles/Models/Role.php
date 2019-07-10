@@ -39,6 +39,6 @@ class Role extends Model
      * @var array
      */
     protected $casts = [
-        
+        'permissions' => 'array',
     ];
 }
