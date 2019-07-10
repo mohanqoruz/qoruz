@@ -2,6 +2,7 @@
 
 namespace App\Roles\Traits;
 
+// use App\Role\Exceptions\RoleDoesNotExist as RoleDoesNotExist;
 use App\Roles\Models\Role;
 
 trait HasRoles
@@ -16,7 +17,6 @@ trait HasRoles
     {
        return $this->belongsToMany(Role::class, 'q2_user_roles');
     }
-
 
    /**
     * Check the role contains or not the user

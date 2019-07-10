@@ -11,7 +11,7 @@ trait Subscribable {
      */
     public function subscriptions()
     {
-       return $this->account()->belongsTo('App\Subscriptions\Models\Subscription');
+       return $this->belongsTo('App\Subscriptions\Models\Subscription');
     } 
     
     /**

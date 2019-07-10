@@ -17,6 +17,7 @@ class CreateQ2PricingTable extends Migration
             $table->bigIncrements('id');
 
             $table->string('name');
+            $table->string('slug')->unique();
             $table->mediumText('description')->nullable(); 
 
             $table->unsignedInteger('plans_count');

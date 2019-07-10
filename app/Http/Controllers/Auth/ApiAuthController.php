@@ -14,10 +14,6 @@ use App\Http\Controllers\Controller;
 class ApiAuthController extends Controller
 {
 
-    private $ok = true;
-    private $message = '';
-    private $errors = [];
-
     /**
      * Instantiate a new controller instance.
      *
@@ -36,6 +32,7 @@ class ApiAuthController extends Controller
      */
     public function register(Request $request)
     {
+        // Validating user inputs
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:q2_users'],
@@ -46,23 +43,21 @@ class ApiAuthController extends Controller
             'account_name' => 'required|string'
         ]);
 
-        if ($validator->fails()) {
-            $this->ok = false;
-            $this->errors = $validator->errors();
-            $this->message = 'Validation Error !';
+        if ($validator->fails()) {            
             return response()->json([
-                'ok' => $this->ok,
-                'message' => $this->message,
-                'errors' => $this->errors 
+                'ok' => false,
+                'error' => $validator->errors()
             ], 200);
         }  
-        
+
+        // Creating account
         $account = new Account;
         $account->name = $request->account_name;
         $account->type = $request->account_type;
         $account->status = 'trialing';
         $account->save();
  
+        // Creating user
         $user = new User;
         $user->name = $request->name;
         $user->email = $request->email;
@@ -70,16 +65,17 @@ class ApiAuthController extends Controller
         $user->phone = $request->phone;
         $user->gender = $request->gender;
         $user->account_id = $account->id;
+        $user->is_admin = 1;
         $user->save();
 
-        $user->assignRole('plan');
-
+        // Assign Role
+        $user->assignRole('admin');
  
+        // Auth token
         $token = $user->createToken('qoruz_api')->accessToken;
  
         return response()->json([
-            'ok' => $this->ok,
-            'message' => 'Registered Successully...',
+            'ok' => true,
             'token' => $token
         ], 200);
     }
@@ -92,16 +88,39 @@ class ApiAuthController extends Controller
      */
     public function login(Request $request)
     {
+
+        // Validating user inputs
+        $validator = Validator::make($request->all(), [
+            'email' => ['required', 'string', 'email'],
+            'password' => ['required', 'string']
+        ]);
+
+        if ($validator->fails()) {            
+            return response()->json([
+                'ok' => false,
+                'error' => $validator->errors()
+            ], 200);
+        }  
+
         $credentials = [
             'email' => $request->email,
-            'password' => $request->password
+            'password' => $request->password,
+            'is_active' => 0
         ];
  
         if (auth()->attempt($credentials)) {
             $token = auth()->user()->createToken('qoruz_api')->accessToken;
-            return response()->json(['token' => $token], 200);
+
+            return response()->json([
+                'ok' => true,
+                'token' => $token,
+            ], 200);
+
         } else {
-            return response()->json(['error' => 'UnAuthorised'], 401);
+            return response()->json([
+                'ok' => false,
+                'error' => 'not_authed'
+            ], 401);
         }
     }
 
@@ -113,7 +132,7 @@ class ApiAuthController extends Controller
     {
         $request->user()->token()->revoke();
         return response()->json([
-            'message' => 'Successfully logged out'
+            'ok' => true
         ]);
     }
 
@@ -131,6 +150,9 @@ class ApiAuthController extends Controller
              'addons' => $user->hasRole('addon'),
          ];
 
-        return response()->json(['user' => $request->user()], 200);
+        return response()->json([
+            'ok' => true,
+            'user' => $request->user()
+        ], 200);
     }
 }

@@ -2,7 +2,10 @@
 
 namespace App\Subscriptions\Traits;
 
-trait Billable {
+use App\Subscriptions\Models\Pricing;
+use App\Subscriptions\Models\Addon;
+
+trait Priceable {
 
 	/**
      * Get the all subscriptions owned by account
@@ -11,7 +14,7 @@ trait Billable {
      */
     public function pricings()
     {
-       return $this->belongsToMany(Pricing::class,'account_pricings');
+       return $this->belongsToMany(Pricing::class, 'q2_account_pricings');
     } 
 
 
@@ -34,4 +37,5 @@ trait Billable {
     {
        return $this->belongsToMany(Addon::class,'account_pricings');
     } 
+    
  }

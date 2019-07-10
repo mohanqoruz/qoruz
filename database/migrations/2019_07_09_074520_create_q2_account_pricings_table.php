@@ -17,7 +17,7 @@ class CreateQ2AccountPricingsTable extends Migration
             $table->bigIncrements('id');
 
             $table->unsignedInteger('account_id');
-            $table->unsignedInteger('plan_id');
+            $table->unsignedInteger('pricing_id');
 
             $table->boolean('auto_renewal')->default('0');
             $table->boolean('status')->default('1'); 
