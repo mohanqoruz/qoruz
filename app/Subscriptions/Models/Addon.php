@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Addon extends Model
 {
-    use HasApiTokens, Notifiable;
+    use  Notifiable;
 
     /**
      * The table associated with the model.

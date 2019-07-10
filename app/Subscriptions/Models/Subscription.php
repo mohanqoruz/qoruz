@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Subscription extends Model
 {
-    use HasApiTokens, Notifiable;
+    use  Notifiable;
 
     /**
      * The table associated with the model.
@@ -18,7 +18,7 @@ class Subscription extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array 
      */
     protected $fillable = [
         

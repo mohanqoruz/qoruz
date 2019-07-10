@@ -20,6 +20,7 @@ class CreateQ2AccountPricingsTable extends Migration
             $table->unsignedInteger('plan_id');
 
             $table->boolean('auto_renewal')->default('0');
+            $table->boolean('status')->default('1'); 
 
             $table->timestamps();
             $table->softDeletes(); 
