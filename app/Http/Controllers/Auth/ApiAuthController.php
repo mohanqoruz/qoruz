@@ -21,7 +21,7 @@ class ApiAuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api')->except(['register', 'login']);
+        $this->middleware('auth:api')->only(['logout']);
     }
 
     /**
@@ -136,23 +136,4 @@ class ApiAuthController extends Controller
         ]);
     }
 
-    /**
-     *  Get the authenticated User
-     */
-    public function user(Request $request)
-    {
-
-        $user = $request->user();
-         return [
-             'roles' => $user->roles,
-             'plan' => $user->hasRole('plan'),
-             'report' => $user->hasRole('report'),
-             'addons' => $user->hasRole('addon'),
-         ];
-
-        return response()->json([
-            'ok' => true,
-            'user' => $request->user()
-        ], 200);
-    }
 }

@@ -17,4 +17,3 @@ Route::get('/', function () {
         "vesrion" => "v.0.1-beta-1"
     ];
 });
-
