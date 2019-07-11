@@ -2,6 +2,9 @@
 
 namespace App\Roles\Traits;
 
+// use App\Role\Exceptions\RoleDoesNotExist as RoleDoesNotExist;
+use App\Roles\Models\Role;
+
 trait HasRoles
 {	
     
@@ -12,9 +15,8 @@ trait HasRoles
      */
     public function roles()
     {
-       return $this->belongsToMany(Role::class, 'user_roles');
+       return $this->belongsToMany(Role::class, 'q2_user_roles');
     }
-
 
    /**
     * Check the role contains or not the user
@@ -24,7 +26,7 @@ trait HasRoles
     public function hasRole($role): bool
     {
       if (is_string($role)) {
-            return $this->roles->contains('name', $role);
+            return $this->roles->contains('slug', $role);
        }
     }
 
@@ -35,13 +37,13 @@ trait HasRoles
     */
     public function assignRole($role)
     {
-        $roles = Role::where('name', $role)->first();
+        $roles = Role::where('slug', $role)->first();
 
         if( ! $roles ){
           // throw RoleDoesNotExist::create($role);
         }
 
-        $this->roles()->attach($roles);
+        $this->roles()->attach($roles, ['account_id' => $this->account_id]);
         return $this;
    }
 
@@ -52,7 +54,7 @@ trait HasRoles
     */
    public function removeRole($role)
    {
-        $roles = Role::where('name', $role)->first();
+        $roles = Role::where('slug', $role)->first();
 
         if( ! $roles ){
           // throw RoleDoesNotExist::create($role);

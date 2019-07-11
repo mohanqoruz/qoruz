@@ -2,10 +2,13 @@
 
 namespace App\Accounts\Models;
 
+use App\Subscriptions\Traits\Subscribable as Subscribable;
+use App\Subscriptions\Traits\Priceable as Priceable;
 use Illuminate\Database\Eloquent\Model;
 
 class Account extends Model
 {
+    use Subscribable, Priceable;
 
     /**
      * The table associated with the model.

@@ -7,7 +7,6 @@ use App\Accounts\Models\Account as Account;
 use App\Subscriptions\Models\Addon as Addon;
 use App\Subscriptions\Models\Pricing as Pricing;
 
-
 use Faker\Generator as Faker;
 
 
@@ -40,6 +39,7 @@ $factory->define(Addon::class, function (Faker $faker) {
         'type' => $faker->randomElement(['plans', 'brands','users', 'reports']),
         'limit' => 100,
         
+
     ];
 });
 

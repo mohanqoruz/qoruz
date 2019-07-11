@@ -17,6 +17,7 @@ class CreateQ2AddonsTable extends Migration
             $table->bigIncrements('id');
 
             $table->string('name');
+            $table->string('slug')->unique();
             $table->enum('type', ['plans', 'brands', 'users','reports','profiles']);
             $table->unsignedInteger('limit');
 

@@ -11,7 +11,7 @@ trait Subscribable {
      */
     public function subscriptions()
     {
-       return $this->account()->belongsTo('App\Subscriptions\Models\Subscription');
+       return $this->hasMany('App\Subscriptions\Models\Subscription');
     } 
     
     /**
@@ -32,6 +32,17 @@ trait Subscribable {
      public function isSubscriptionActive() : bool
      {
         return ($this->subscription()) ? true : false ;
+     }
+
+     /**
+     * Get subscription end date
+     *
+     * @return  Date $date 
+     */
+     public function subscriptionEnds() 
+     {  
+        $subscription = $this->subscription();
+        return $subscription->ends_at;
      }
 
 } 

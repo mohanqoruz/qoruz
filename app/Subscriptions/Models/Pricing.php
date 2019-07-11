@@ -2,11 +2,13 @@
 
 namespace App\Subscriptions\Models;
 
+use App\Subscriptions\Traits\HasAddon;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Pricing extends Model
 {
-
+    use HasAddon;
     /**
      * The table associated with the model.
      *
