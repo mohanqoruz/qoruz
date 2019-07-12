@@ -37,10 +37,12 @@ trait Priceable {
         if (is_string($price)) {
             $price = Pricing::where('slug', $price)->first();
 
-            if ($price) {                
+            if ($price) {
+
                 $this->pricings()->attach($price, [
                     'status' => 1
                 ]);
+                
             }
         }
         return $price;

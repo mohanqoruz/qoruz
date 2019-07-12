@@ -4,11 +4,13 @@ namespace App\Accounts\Models;
 
 use App\Subscriptions\Traits\Subscribable as Subscribable;
 use App\Subscriptions\Traits\Priceable as Priceable;
+use Chelout\RelationshipEvents\Concerns\HasBelongsToManyEvents;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Account extends Model
 {
-    use Subscribable, Priceable;
+    use Subscribable, Priceable, HasBelongsToManyEvents;
 
     /**
      * The table associated with the model.
@@ -43,4 +45,21 @@ class Account extends Model
     protected $casts = [
         
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::belongsToManyAttaching(function ($relation, $parent, $ids) {
+            \Log::info('_____________________(*_*)________________________');
+            \Log::info("Attaching pricing to account {$parent->name}.");
+
+        });
+
+        static::belongsToManyAttached(function ($relation, $parent, $ids) {
+            \Log::info("Pricing has been attached to account {$parent->name}.");
+            self::createSubscription($parent, $ids);
+        });
+    }
+    
 }
