@@ -39,5 +39,5 @@ class Addon extends Model
      */
     protected $casts = [
         
-    ];
+    ];   
 }

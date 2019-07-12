@@ -46,6 +46,11 @@ class Account extends Model
         
     ];
 
+    /**
+     * Account pricing pivot relation event observer
+     * Here fired belogns to many attaching events 
+     * Creating subscriptions
+     */
     protected static function boot()
     {
         parent::boot();
@@ -57,8 +62,8 @@ class Account extends Model
         });
 
         static::belongsToManyAttached(function ($relation, $parent, $ids) {
-            \Log::info("Pricing has been attached to account {$parent->name}.");
             self::createSubscription($parent, $ids);
+            \Log::info("Pricing has been attached to account {$parent->name}.");
         });
     }
     

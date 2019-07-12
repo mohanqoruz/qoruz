@@ -3,12 +3,13 @@
 namespace App\Subscriptions\Models;
 
 use App\Subscriptions\Traits\HasAddon;
+use Chelout\RelationshipEvents\Concerns\HasBelongsToManyEvents;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Pricing extends Model
 {
-    use HasAddon;
+    use HasAddon, HasBelongsToManyEvents;
     /**
      * The table associated with the model.
      *
@@ -42,4 +43,25 @@ class Pricing extends Model
     protected $casts = [
         
     ];
+
+     /**
+     * Pricing addons pivot relation event observer
+     * Here fired belogns to many attaching events 
+     * Adding addons booster
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::belongsToManyAttaching(function ($relation, $parent, $ids) {
+            \Log::info('_____________________(*_*)________________________');
+            \Log::info("Attaching addon to pricing {$parent->name}.");
+
+        });
+
+        static::belongsToManyAttached(function ($relation, $parent, $ids) {
+            self::addAddonBooster($parent, $ids);
+            \Log::info("Addon has been attached to pricing {$parent->name}.");
+        });
+    }
 }

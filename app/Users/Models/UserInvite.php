@@ -20,7 +20,7 @@ class UserInvite extends Model
      * @var array
      */
     protected $fillable = [
-        
+        'inviter_id', 'email', 'token',
     ];
 
     /**

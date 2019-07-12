@@ -20,10 +20,10 @@ class CreateQ2SubscriptionsTable extends Migration
             $table->unsignedInteger('account_id');
 
             $table->unsignedInteger('plans_count');
-            $table->unsignedInteger('report_count');
-            $table->unsignedInteger('brand_count');
+            $table->unsignedInteger('reports_count');
+            $table->unsignedInteger('brands_count');
             $table->unsignedInteger('users_count');
-            $table->unsignedInteger('profile_views');
+            $table->unsignedInteger('profiles_count');
 
             $table->dateTime('start_at'); 
             $table->dateTime('ends_at'); 

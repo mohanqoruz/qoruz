@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Mail\SendInvite;
+use App\Users\Models\UserInvite; 
+
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -25,7 +29,24 @@ class InviteController extends Controller
      */
     public function sendInvite(Request $request)
     {
-        # code...
+        do {
+            $token = str_random();
+        }
+        while (UserInvite::where('token', $token)->first());
+
+        $user = $request->user();
+    
+        $invite = UserInvite::create([
+            'inviter_id' => 1,
+            'email' => $request->get('email'),
+            'token' => $token
+        ]);
+    
+        // send the email
+        Mail::to($request->get('email'))->send(new SendInvite($invite));
+
+        return ['status' => 'ok'];
+
     }
 
     /**
@@ -36,7 +57,13 @@ class InviteController extends Controller
      */
     public function acceptInvite(Request $request, $token)
     {
-        # code...
+        if (!$invite = UserInvite::where('token', $token)->first()) {
+            abort(404);
+        }
+
+        // User::create(['email' => $invite->email]);
+
+        return 'Good job! Invite accepted!';
     }
 
     /**
