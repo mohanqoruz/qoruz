@@ -2,9 +2,9 @@
 
 namespace App\Subscriptions\Traits;
 
-use App\Subscriptions\Models\Subscription as Subscription;
-use App\Subscriptions\Models\Pricing as Pricing;
 use Carbon\Carbon;
+use App\Subscriptions\Models\Pricing as Pricing;
+use App\Subscriptions\Models\Subscription as Subscription;
 
 trait Subscribable {
 

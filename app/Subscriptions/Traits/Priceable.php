@@ -22,7 +22,7 @@ trait Priceable {
      *
      * @return  Pricing $pricing
      */
-    public function pricing() : Pricing
+    public function pricing() 
     {
        return $this->pricings()->where('status',1)->first();
     } 
@@ -35,7 +35,7 @@ trait Priceable {
     public function addPricing($price)
     {   
         if (is_string($price)) {
-            $price = Pricing::where('name', $price)->first();
+            $price = Pricing::where('slug', $price)->first();
 
             if ($price) {
 
@@ -45,9 +45,7 @@ trait Priceable {
                 
             }
         }
-
         return $price;
-        
     } 
 
     /**

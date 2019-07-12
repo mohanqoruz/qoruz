@@ -2,6 +2,7 @@
 
 namespace App\Users\Models;
 
+use App\Plan\Traits\Plannable;
 use App\Roles\Traits\HasRoles;
 use App\Accounts\Traits\Accountable;
 use Laravel\Passport\HasApiTokens;
@@ -13,7 +14,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, Notifiable, HasRoles, Accountable;
+    use HasApiTokens, Notifiable, HasRoles, Accountable,Plannable;
 
     /**
      * The table associated with the model.
@@ -48,7 +49,6 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
 }
 
 

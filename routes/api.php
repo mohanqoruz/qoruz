@@ -61,6 +61,8 @@ Route::prefix('v1')->group(function () {
 
         // User plans
         Route::get('user.plans', 'PlanController@getUserDetails');
+        Route::post('plans.store', 'PlanController@store');
     });  
+    
 
 });

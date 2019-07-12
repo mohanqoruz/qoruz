@@ -2,6 +2,7 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
+use App\Plan\Models\Plan as Plan;
 use App\Users\Models\User as User;
 use App\Accounts\Models\Account as Account;
 use App\Subscriptions\Models\Addon as Addon;
@@ -19,8 +20,9 @@ $factory->define(Account::class, function (Faker $faker) {
     ];
 });
 
+$accounts = App\Accounts\Models\Account::pluck('id')->all();
 $factory->define(User::class, function (Faker $faker) {
-	$accounts = App\Accounts\Models\Account::pluck('id')->all();
+	
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
@@ -36,6 +38,7 @@ $factory->define(User::class, function (Faker $faker) {
 $factory->define(Addon::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
+        'slug' => $faker->unique()->name,
         'type' => $faker->randomElement(['plans', 'brands','users', 'reports']),
         'limit' => 100,
         
@@ -46,6 +49,7 @@ $factory->define(Addon::class, function (Faker $faker) {
 $factory->define(Pricing::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
+        'slug' => $faker->unique()->name,
         'description' => $faker->text,
         'plans_count' => $faker->randomElement(['5', '10','15', '20']),
         'brand_count' => $faker->randomElement(['5', '10','15', '20']),
@@ -56,6 +60,26 @@ $factory->define(Pricing::class, function (Faker $faker) {
         'data_renewal_frequency' => 3,
         'start_at' =>  $faker->dateTime(1562750746),
         'ends_at' => $faker->dateTime(1562750746)
+        
+    ];
+});
+
+$users = App\Users\Models\User::pluck('id')->all();
+$pricings = App\Subscriptions\Models\Pricing::pluck('id')->all();
+
+$factory->define(Plan::class, function (Faker $faker) {
+    return [
+        'name' => $faker->name,
+        'slug' => $faker->unique()->name,
+        'brand_id' => $faker->randomElement(['1', '2','3', '4']),
+        'account_id' => $faker->randomElement($accounts),
+        'owner_id' => $faker->randomElement($users),
+        'pricing_id' => $faker->randomElement($pricings),
+        'type' => $faker->randomElement(['1', '3','5']),
+        'platforms' => 12,
+        'plan_optimizer' => 3,
+        'optimizer_value' =>  30,
+        'status' => 'active'
         
     ];
 });
