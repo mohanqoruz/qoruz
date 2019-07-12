@@ -31,7 +31,11 @@ Route::prefix('v1')->group(function () {
 
         // Login and register
         Route::post('register', 'ApiAuthController@register');
-        Route::post('login', 'ApiAuthController@login');  
+        Route::post('login', 'ApiAuthController@login'); 
+
+        // // Forget password
+        // Route::post('password/email', 'ForgotPasswordController@getResetToken');
+        // Route::post('password/reset', 'ResetPasswordController@reset');
 
         // User logout 
         Route::get('logout', 'ApiAuthController@logout');

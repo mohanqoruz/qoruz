@@ -35,15 +35,14 @@ trait Priceable {
     public function addPricing($price)
     {   
         if (is_string($price)) {
-            $price = Pricing::where('slug', $price)->first();
+            $price = Pricing::where('name', $price)->first();
 
             if ($price) {
-               // \Log::info('************************ok****************');
-                
+
                 $this->pricings()->attach($price, [
                     'status' => 1
                 ]);
-
+                
             }
         }
 
