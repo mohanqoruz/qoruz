@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Accounts\Models;
+namespace App\Plan\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -38,6 +38,6 @@ class Plan extends Model
      * @var array
      */
     protected $casts = [
-        
+        'platforms' => 'array',
     ];
 }

@@ -17,10 +17,12 @@ class CreateQ2PlansTable extends Migration
             $table->increments('id');
 
             $table->string('name');
+            $table->string('slug')->unique()->nullable();
 
             $table->unsignedInteger('brand_id');
             $table->unsignedInteger('account_id');
             $table->unsignedInteger('owner_id');
+            $table->unsignedInteger('pricing_id');
 
             $table->bigInteger('type');
             $table->jsonb('platforms');

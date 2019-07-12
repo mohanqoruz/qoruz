@@ -16,7 +16,7 @@ class CreateQ2SubscriptionsTable extends Migration
         Schema::create('q2_subscriptions', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->unsignedInteger('plan_id');
+            $table->unsignedInteger('pricing_id');
             $table->unsignedInteger('account_id');
 
             $table->unsignedInteger('plans_count');
