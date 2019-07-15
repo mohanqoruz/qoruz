@@ -41,9 +41,8 @@ class InviteController extends Controller
         while (UserInvite::where('token', $token)->first());
 
         $user = $request->user();
-    
         $invite = UserInvite::create([
-            'inviter_id' => 1,
+            'inviter_id' => 2,
             'email' => $request->get('email'),
             'token' => $token,
             'status' => 1

@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\Users\Models\UserInvite; 
+use App\Users\Models\User; 
 
 use Illuminate\Support\Facades\URL;
 
@@ -39,7 +40,8 @@ class SendInvite extends Mailable
 
         return $this->markdown('emails.invite',[
             'url' => $url,
-            'invite'=> $this->invite
+            'invite'=> $this->invite,
+            'user' => User::find($this->invite->inviter_id)
         ]);
     }
 }
