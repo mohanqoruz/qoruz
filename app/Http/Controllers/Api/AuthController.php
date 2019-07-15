@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Api;
 
 use App\Users\Models\User as User;
 use App\Accounts\Models\Account as Account;
@@ -11,9 +11,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class ApiAuthController extends Controller
-{
 
+class AuthController extends Controller
+{
+    
     /**
      * Instantiate a new controller instance.
      *
@@ -21,7 +22,7 @@ class ApiAuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api')->only(['logout']);
+        $this->middleware('auth:api')->only('logout');
     }
 
     /**
@@ -135,5 +136,4 @@ class ApiAuthController extends Controller
             'ok' => true
         ]);
     }
-
 }

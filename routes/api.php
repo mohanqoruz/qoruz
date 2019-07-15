@@ -18,51 +18,62 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::prefix('v1')->group(function () {
+Route::get('/', function () {
+    return [
+        "app_name" => "Qoruz API",
+        "vesrion" => "v.0.1-beta-1"
+    ];
+});
 
-    /**
-     * -------------------------------------------------------------
-     * User API auth routes
-     * -------------------------------------------------------------
-     * @location App\Controller\Auth\ApiAuthController]
-     * 
-     */
-    Route::namespace('Auth')->group(function () {
 
-        // Login and register
-        Route::post('register', 'ApiAuthController@register');
-        Route::post('login', 'ApiAuthController@login'); 
+/**
+ * -------------------------------------------------------------
+ * User API auth routes
+ * -------------------------------------------------------------
+ * @location App\Controller\Auth\ApiAuthController]
+ * 
+ */
+Route::namespace('Api')->group(function () {
 
-        // // Forget password
-        // Route::post('password/email', 'ForgotPasswordController@getResetToken');
-        // Route::post('password/reset', 'ResetPasswordController@reset');
+    // Login and register
+    Route::post('register', 'AuthController@register');
+    Route::post('login', 'AuthController@login'); 
 
-        // User logout 
-        Route::get('logout', 'ApiAuthController@logout');
-    });
-    
-    /**
-     * -------------------------------------------------------------
-     * User Details routes
-     * -------------------------------------------------------------
-     * @location App\Controller\User\UserDetailsController
-     * @location App\Controller\User\PlanController
-     * 
-     */
-    Route::namespace('User')->group(function () {
+    // User logout 
+    Route::get('logout', 'AuthController@logout');
 
-        // User details
-        Route::get('user.deatils', 'UserDetailsController@getUserDetails');
-        Route::get('user.account', 'UserDetailsController@getAccountDetails');
+    // // Email Verification
+    Route::get('email/verify/{id}', 'VerificationController@verify')->name('verification.verify');
+    Route::get('email.resent', 'VerificationController@resend')->name('verification.resend');
 
-        // User invites
-        Route::post('send.invite', 'InviteController@sendInvite');
-        Route::get('accept.invite', 'InviteController@AcceptInvite');
+    // Forget password
+    // Route::post('password/email', 'ForgotPasswordController@getResetToken');
+    // Route::post('password/reset', 'ResetPasswordController@reset');
 
-        // User plans
-        Route::get('user.plans', 'PlanController@getUserDetails');
-        Route::post('plans.store', 'PlanController@store');
-    });  
-    
+    // Change Passowrd
 
 });
+
+/**
+ * -------------------------------------------------------------
+ * User Details routes
+ * -------------------------------------------------------------
+ * @location App\Controller\User\UserDetailsController
+ * @location App\Controller\User\PlanController
+ * 
+ */
+Route::namespace('User')->group(function () {
+
+    // User details
+    Route::get('user.deatils', 'UserDetailsController@getUserDetails');
+    Route::get('user.account', 'UserDetailsController@getAccountDetails');
+
+    // User invites
+    Route::post('send.invite', 'InviteController@sendInvite');
+    Route::get('accept.invite', 'InviteController@AcceptInvite');
+
+    // User plans
+    Route::get('user.plans', 'PlanController@getUserDetails');
+    Route::post('plans.store', 'PlanController@store');
+});  
+    

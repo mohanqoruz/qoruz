@@ -35,6 +35,11 @@ trait HasAddon {
         
     } 
     
+    /**
+     * Add the addons for the active subscriptyion
+     *
+     * @return  Addons $addons
+     */
     public static function addAddonBooster($pricing, $addons_ids)
     {
         foreach ($addons_ids as $addons_id) {

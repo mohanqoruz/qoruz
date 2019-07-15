@@ -17,3 +17,7 @@ Route::get('/', function () {
         "vesrion" => "v.0.1-beta-1"
     ];
 });
+
+
+// Auth::routes();
+// Auth::routes(['verify' => true]);
