@@ -48,7 +48,7 @@ class AuthController extends Controller
             return response()->json([
                 'ok' => false,
                 'error' => $validator->errors()
-            ], 200);
+            ], 400);
         }  
 
         // Creating account

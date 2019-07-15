@@ -19,11 +19,12 @@ class CreateQ2UsersTable extends Migration
 
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('password');
-            $table->bigInteger('phone');
-            $table->enum('gender', ['male', 'female', 'other']); 
+            $table->string('password')->nullable();
+            $table->bigInteger('phone')->nullable();
+            $table->enum('gender', ['male', 'female', 'other','na'])->default('na'); 
             $table->string('profile_image')->nullable();
 
+            $table->uuid('token')->nullable();
             $table->dateTime('email_verified_at')->nullable();
             $table->dateTime('phone_verified_at')->nullable(); 
 
