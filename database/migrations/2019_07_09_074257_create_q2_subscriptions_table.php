@@ -25,6 +25,14 @@ class CreateQ2SubscriptionsTable extends Migration
             $table->unsignedInteger('users_count');
             $table->unsignedInteger('profiles_count'); // prfile views
 
+            //inclusions
+            $table->boolean('is_audience_searchable')->default(0);
+            $table->boolean('is_access_registered_influencers')->default(0);
+            $table->boolean('is_view_insights')->default(0);
+            $table->boolean('is_filterable')->default(0);
+            $table->boolean('is_competation_check')->default(0);
+            $table->boolean('report_refresh')->default(0);
+
             $table->dateTime('start_at'); 
             $table->dateTime('ends_at'); 
 
