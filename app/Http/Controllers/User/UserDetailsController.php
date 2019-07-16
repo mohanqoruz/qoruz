@@ -51,4 +51,62 @@ class UserDetailsController extends Controller
             'account' => $request->user()->account
         ], 200);
     }
+
+    /**
+     * Get User Pricings details
+     * @return Pricing $pricing with addons
+     */
+    public function getAllPricingDetails(Request $request)
+    {
+        $account =  $request->user()->account;
+        return response()->json([
+            'ok' => true,
+            'pricings' => $account->getAllPricingsWithAddons()
+         ], 200);
+    }
+
+    /**
+     * Get Active Pricing details
+     * 
+     * @return Pricing $pricing with addons
+     */
+    public function getActivePricingDetails(Request $request)
+    {
+
+       $account =  $request->user()->account;
+       return response()->json([
+            'ok' => true,
+            'pricing' => $account->pricing,
+            'addons' => $account->pricing->addons
+        ], 200);
+         
+    }
+
+    /**
+     * Get All Subscriptions belonging to account
+     * @return Subscription $subscriptions
+     */
+    public function getAllSubscriptionDetails(Request $request)
+    {
+
+       $account =  $request->user()->account;
+       return response()->json([
+            'ok' => true,
+            'subscriptions' => $account->subscriptions,
+        ], 200);
+
+    }
+
+    /**
+     * Get Active Subscription belonging to account
+     * @return Subscription $subscription
+     */
+    public function getActiveSubscriptionDetails(Request $request)
+    {
+       $account =  $request->user()->account;
+       return response()->json([
+            'ok' => true,
+            'subscription' => $account->subscription,
+        ], 200);
+    }
 }

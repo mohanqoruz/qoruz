@@ -23,7 +23,7 @@ trait Subscribable {
      *
      * @return  Subscription $subscription
      */
-    public function subscription()
+    public function getSubscriptionAttribute()
     {
     	return $this->subscriptions()->where('status',1)->first();
     }

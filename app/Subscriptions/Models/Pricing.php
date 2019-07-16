@@ -32,7 +32,7 @@ class Pricing extends Model
      * @var array
      */
     protected $hidden = [
-       
+       'pivot'
     ];
 
     /**
