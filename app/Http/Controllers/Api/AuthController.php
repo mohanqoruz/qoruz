@@ -48,7 +48,7 @@ class AuthController extends Controller
             return response()->json([
                 'ok' => false,
                 'error' => $validator->errors()
-            ], 200);
+            ], 400);
         }  
 
         // Creating account
@@ -71,6 +71,9 @@ class AuthController extends Controller
 
         // Assign Role
         $user->assignRole('admin');
+
+        // Send the email verification notification.
+        $user->sendEmailVerificationNotification();
  
         // Auth token
         $token = $user->createToken('qoruz_api')->accessToken;

@@ -71,7 +71,8 @@ Route::namespace('User')->group(function () {
 
     // User invites
     Route::post('send.invite', 'InviteController@sendInvite');
-    Route::get('accept.invite', 'InviteController@AcceptInvite');
+    Route::get('accept.invite', 'InviteController@acceptInvite')->name('accept.invite');
+    Route::post('resend.invite','InviteController@resendInvite');
 
     // User plans
     Route::get('user.plans', 'PlanController@getUserDetails');
