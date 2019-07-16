@@ -43,14 +43,15 @@ Route::namespace('Api')->group(function () {
     Route::get('logout', 'AuthController@logout');
 
     // // Email Verification
-    Route::get('email/verify/{id}', 'VerificationController@verify')->name('verification.verify');
-    Route::get('email.resent', 'VerificationController@resend')->name('verification.resend');
+    Route::get('email.verify/{id}', 'VerificationController@verify')->name('verification.verify');
+    Route::get('email.resent', 'VerificationController@resend')->name('verification.resend');    
 
     // Forget password
     // Route::post('password/email', 'ForgotPasswordController@getResetToken');
     // Route::post('password/reset', 'ResetPasswordController@reset');
 
     // Change Passowrd
+    Route::post('change.password', 'UserProfileController@changePassword');
 
 });
 

@@ -2,14 +2,15 @@
 
 namespace App\Mail;
 
-use App\Users\Models\UserInvite; 
+use App\Users\Models\User as User; 
+use Illuminate\Support\Facades\URL;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class SendInvite extends Mailable
+class EmailVerified extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -18,9 +19,9 @@ class SendInvite extends Mailable
      *
      * @return void
      */
-    public function __construct(UserInvite $invite)
+    public function __construct(User $user)
     {
-        $this->invite = $invite;
+        $this->user = $user;
     }
 
     /**
@@ -30,6 +31,12 @@ class SendInvite extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.invite');
+        $url =  URL::temporarySignedRoute(
+            'verification.verify', now()->addMinutes(60 * 24), ['id' => $this->user->id]
+        );
+
+        return $this->view('emails.verify')->with([
+            'url' => $url
+        ]);
     }
 }
