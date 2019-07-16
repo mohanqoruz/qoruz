@@ -52,7 +52,5 @@ class AddonsTableSeeder extends Seeder
             'limit' => '30'
         ]);
 
-
-
     }
 }
