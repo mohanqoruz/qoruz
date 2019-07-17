@@ -34,11 +34,11 @@ class VerifyEmail extends VerifyEmailBase
      */
     public function toMail($notifiable)
     {
-        $verificationUrl = $this->verificationUrl($notifiable);
+        // $verificationUrl = $this->verificationUrl($notifiable);
 
-        if (static::$toMailCallback) {
-            return call_user_func(static::$toMailCallback, $notifiable, $verificationUrl);
-        }
+        // if (static::$toMailCallback) {
+        //     return call_user_func(static::$toMailCallback, $notifiable, $verificationUrl);
+        // }
 
         return (new Mailable($notifiable))->to($notifiable->email);
     }

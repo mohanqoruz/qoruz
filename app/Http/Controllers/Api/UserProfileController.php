@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class UserProfileController extends Controller
 {
@@ -40,8 +41,12 @@ class UserProfileController extends Controller
             $user->password = Hash::make($request->password);
             $user->save();
 
+            $user->token()->revoke();
+            $token = $user->createToken('qoruz_api')->accessToken;
+
             return response()->json([
                 'ok' => true,
+                'token' => $token,
                 'stuff' => 'Password changed successfully!'
             ], 200);
 

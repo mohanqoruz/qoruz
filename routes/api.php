@@ -44,11 +44,11 @@ Route::namespace('Api')->group(function () {
 
     // // Email Verification
     Route::get('email.verify/{id}', 'VerificationController@verify')->name('verification.verify');
-    Route::get('email.resent', 'VerificationController@resend')->name('verification.resend');    
+    Route::get('email.resent', 'VerificationController@resend')->name('verification.resend?');    
 
     // Forget password
-    // Route::post('password/email', 'ForgotPasswordController@getResetToken');
-    // Route::post('password/reset', 'ResetPasswordController@reset');
+    Route::post('forgot.password', 'ForgotPasswordController@sendResetLinkEmail');
+    Route::post('reset.password', 'ResetPasswordController@reset')->name('reset.password');
 
     // Change Passowrd
     Route::post('change.password', 'UserProfileController@changePassword');
