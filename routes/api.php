@@ -70,11 +70,12 @@ Route::namespace('User')->group(function () {
 
     // User details
     Route::get('user.deatils', 'UserDetailsController@getUserDetails');
-    Route::get('user.account', 'UserDetailsController@getAccountDetails');
-    Route::get('user.pricings','UserDetailsController@getAllPricingDetails');
-    Route::get('user.active.pricing','UserDetailsController@getActivePricingDetails');
-    Route::get('user.subscriptions','UserDetailsController@getAllSubscriptionDetails');
-    Route::get('user.active.subscription','UserDetailsController@getActiveSubscriptionDetails');
+
+    Route::get('user.account', 'UserDetailsController@getAccountDetails'); //account
+    Route::get('user.pricings','UserDetailsController@getAllPricingDetails'); //pricings
+    Route::get('user.active.pricing','UserDetailsController@getActivePricingDetails'); // pricingmo
+    Route::get('user.subscriptions','UserDetailsController@getAllSubscriptionDetails'); // subscriptions
+    Route::get('user.active.subscription','UserDetailsController@getActiveSubscriptionDetails'); //subscription
 
     // User invites
     Route::post('send.invite', 'InviteController@sendInvite');
@@ -87,4 +88,14 @@ Route::namespace('User')->group(function () {
 
    
 });  
+
+
+//  accounts.info
+//  accounts.addprcing [sending pricing name]
+//  account.pricings [display all pricings]
+//  account.pricing [active pricing]
+//  account.subscriptions [display all subscriptions]
+//  account.subscription [Active subscription]
+//  account.pricing.addAddons [add new addons]
+//  account.pricing.addons [add new addons]
 

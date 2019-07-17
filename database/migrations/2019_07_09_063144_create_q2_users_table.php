@@ -24,7 +24,7 @@ class CreateQ2UsersTable extends Migration
             $table->enum('gender', ['male', 'female', 'other','na'])->default('na'); 
             $table->string('profile_image')->nullable();
 
-            $table->uuid('token')->nullable();
+            $table->uuid('email_token')->nullable();
             $table->dateTime('email_verified_at')->nullable();
             $table->dateTime('phone_verified_at')->nullable(); 
 
