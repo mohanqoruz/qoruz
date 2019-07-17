@@ -22,9 +22,19 @@ trait Priceable {
      *
      * @return  Pricing $pricing
      */
-    public function pricing() 
+    public function getPricingAttribute() 
     {
        return $this->pricings()->where('status',1)->first();
+    } 
+
+    /**
+     * Get all pricing owned by account
+     *
+     * @return  Pricing $pricing
+     */
+    public function getAllPricingsWithAddons() 
+    {
+       return $this->pricings()->with('addons')->get();
     } 
 
     /**

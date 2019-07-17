@@ -53,6 +53,9 @@ Route::namespace('Api')->group(function () {
     // Change Passowrd
     Route::post('change.password', 'UserProfileController@changePassword');
 
+    //User Profile
+    Route::post('user.profile.update', 'UserProfileController@updateProfile');
+
 });
 
 /**
@@ -68,6 +71,10 @@ Route::namespace('User')->group(function () {
     // User details
     Route::get('user.deatils', 'UserDetailsController@getUserDetails');
     Route::get('user.account', 'UserDetailsController@getAccountDetails');
+    Route::get('user.pricings','UserDetailsController@getAllPricingDetails');
+    Route::get('user.active.pricing','UserDetailsController@getActivePricingDetails');
+    Route::get('user.subscriptions','UserDetailsController@getAllSubscriptionDetails');
+    Route::get('user.active.subscription','UserDetailsController@getActiveSubscriptionDetails');
 
     // User invites
     Route::post('send.invite', 'InviteController@sendInvite');
@@ -76,6 +83,8 @@ Route::namespace('User')->group(function () {
 
     // User plans
     Route::get('user.plans', 'PlanController@getUserDetails');
-    Route::post('plans.store', 'PlanController@store');
+    Route::post('plans.create', 'PlanController@create');
+
+   
 });  
-    
+

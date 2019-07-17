@@ -92,6 +92,7 @@ class InviteController extends Controller
         $user->name = $username;
         $user->email = $invite->email;
         $user->account_id =  $inviter->account_id;
+        //change this to random string and send email with password for user
         $user->password =  bcrypt('password');
         $user->save();
 

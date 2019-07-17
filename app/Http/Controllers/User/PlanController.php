@@ -22,12 +22,12 @@ class PlanController extends Controller
     }
 
     /**
-     * Handles Plan Store Request
+     * Handles Plan create Request
      * @param  $request  planning details
      * @return Plan $plan
      */
 
-    public function store(Request $request){
+    public function create(Request $request){
 
          // Validating user inputs
          $validator = Validator::make($request->all(), [

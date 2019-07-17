@@ -23,7 +23,7 @@ trait Subscribable {
      *
      * @return  Subscription $subscription
      */
-    public function subscription()
+    public function getSubscriptionAttribute()
     {
     	return $this->subscriptions()->where('status',1)->first();
     }
@@ -53,7 +53,7 @@ trait Subscribable {
       * Subscrbing the pricing related to account
       * @param [Account] $account
       * @param [Array] $pricing_ids
-      * @return Subscriptions $subscriptions
+      * @return Subscription $subscription
       */
      public static function createSubscription($account, $pricing_ids)
      {
@@ -74,6 +74,8 @@ trait Subscribable {
               $subscription->start_at = Carbon::now();
               $subscription->ends_at = Carbon::now()->addMonths($pricing->data_renewal_frequency);
               $subscription->save();
+
+              return $subscription;
            }
         }
      }
