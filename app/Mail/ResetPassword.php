@@ -2,26 +2,27 @@
 
 namespace App\Mail;
 
-use App\Users\Models\User as User; 
-use Illuminate\Support\Facades\URL;
-
+use App\Users\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class EmailVerified extends Mailable
+class ResetPassword extends Mailable
 {
     use Queueable, SerializesModels;
+
+    public $token;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct(User $user, $token)
     {
         $this->user = $user;
+        $this->token = $token;
     }
 
     /**
@@ -31,12 +32,13 @@ class EmailVerified extends Mailable
      */
     public function build()
     {
-        $url =  URL::temporarySignedRoute(
-            'verification.verify', now()->addMinutes(60 * 24), ['id' => $this->user->id]
+        $url =  \URL::temporarySignedRoute(
+            'reset.password', now()->addMinutes(60 * 24), ['token' => $this->token]
         );
 
-        return $this->markdown('emails.verify',[
-            'url' => $url
+        return $this->markdown('emails.reset_password',[
+            'url' => $url,
+            'user' =>$this->user
         ]);
     }
 }

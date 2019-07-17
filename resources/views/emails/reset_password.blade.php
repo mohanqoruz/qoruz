@@ -1,8 +1,9 @@
 @component('mail::message')
-#Greetings
+Greetings {{ $user->name }},
+
 
 @component('mail::button', ['url' => $url])
-Verify Account
+Reset Password
 @endcomponent
 
 Thanks,<br>
