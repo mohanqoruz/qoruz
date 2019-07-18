@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Mail\SendInvite;
 use App\Users\Models\UserInvite; 
 use App\Users\Models\User; 
+use App\Constants\Error;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -35,31 +36,46 @@ class InviteController extends Controller
      */
     public function sendInvite(Request $request)
     {
+        // Validating user details
+        $validator = Validator::make($request->all(), [
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:q2_users']
+        ]);
+
+        if ($validator->fails()) {            
+            return response()->json([
+                'ok' => false,
+                'error' => Error::VALIDATION_FAILED,
+                'validation_errors' => $validator->errors()
+            ], 400);
+        }  
+
         do {
-            $token = str_random(48);
+            $token = str_random(60);
         }
         while (UserInvite::where('token', $token)->first());
-
-        $user = $request->user();
-        $invite = UserInvite::create([
-            'inviter_id' => 2,
-            'email' => $request->get('email'),
-            'token' => $token,
-            'status' => 1
-        ]);
+        
+        $invite = UserInvite::where('email', $request->email)->first();
+        if (! $invite) {
+            $invite = UserInvite::create([
+                'inviter_id' => 2,
+                'email' => $request->email,
+                'token' => $token,
+                'status' => 0
+            ]);
+        } else {
+            $invite->token = $token;
+            $invite->save();
+        }
     
-        // send the email
-        Mail::to($request->get('email'))->send(new SendInvite($invite));
-
+        $invite->sendInviteNotification($request->user());
+      
         return ['status' => 'ok'];
 
     }
 
     /**
      * Accept url  
-     * 
-     * 
-     * 
+     
      * @return  Json and Redirect to React App
      */
     public function acceptInvite(Request $request)
@@ -68,12 +84,13 @@ class InviteController extends Controller
         if (!$invite) {
             return response()->json([
                 'ok' => false,
-                'error' => 'user_not_found'
+                'error' => Error::INVALID_TOKEN
             ], 400);
         }
 
         $username = Str::before($invite->email, '@');
         $request->merge(['email' => $invite->email]);
+
          // Validating user details
          $validator = Validator::make($request->all(), [
             'email' => ['required', 'string', 'email', 'max:255', 'unique:q2_users']
@@ -82,10 +99,11 @@ class InviteController extends Controller
         if ($validator->fails()) {            
             return response()->json([
                 'ok' => false,
-                'error' => $validator->errors()
+                'error' =>Error::VALIDATION_FAILED,
+                'validation_errors' => $validator->errors()
             ], 400);
         }  
-        //redirect them to React UI to show validation errors
+
         $inviter = User::find($invite->inviter_id);
            
         $user = new User;
@@ -97,14 +115,13 @@ class InviteController extends Controller
         $user->save();
 
         //update invite status
-        $invite->status = 0;
+        $invite->status = 1;
         $invite->save();
 
         return response()->json([
             'ok' => true,
             'user' => $user
         ], 200);
-        //redirect them to React UI to add password
     }
 
     /**

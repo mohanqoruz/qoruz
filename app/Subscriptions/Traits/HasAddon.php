@@ -21,34 +21,33 @@ trait HasAddon {
      *
      * @return  Addons $addons
      */
-    public function addAddons($addon_name)
+    public function addAddons($user, $addon_name)
     {   
         if (is_string($addon_name)) {
             $addon = Addon::where('slug', $addon_name)->first();
         }
         
         $this->addons()->attach($addon,[
-            'added_by' => 11
+            'added_by' => $user->id
         ]);
+
+        $this->addAddonBooster($user, $addon);
           
         return $addon;             
     } 
     
     /**
-     * Add the addons for the active subscriptyion
+     * Add the addons for the active subscription
      *
      * @return  Addons $addons
      */
-    public static function addAddonBooster($pricing, $addons_ids)
+    public function addAddonBooster($user, $addon)
     {
-        foreach ($addons_ids as $addons_id) {
-            $addons = Addon::find($addons_id);
-            $subscription = $pricing->subscription();
-            
-            if ($addons && $subscription) {
-                $booster = $addon->type . '_count';
-                $subscription->increment($booster, $addons->limit);
-            }
+        $subscription = $user->account->subscription;
+
+        if ($addon && $subscription) {
+            $booster = $addon->type . '_count';
+            $subscription->increment($booster, $addon->limit);
         }
     }
     

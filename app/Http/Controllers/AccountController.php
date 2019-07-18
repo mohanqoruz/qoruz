@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Users\Models\User as User;
-use App\Accounts\Models\Account as Account;
-
+use App\Constants\Error;
 use Illuminate\Http\Request;
+use App\Users\Models\User as User;
+
+use Illuminate\Support\Facades\Validator;
+use App\Accounts\Models\Account as Account;
 
 class AccountController extends Controller
 {
@@ -26,7 +28,6 @@ class AccountController extends Controller
      */
     public function getAccountDetails(Request $request)
     {
-
         $account = $request->user()->account;
         return response()->json([
             'ok' => true,
@@ -40,6 +41,19 @@ class AccountController extends Controller
      */
     public function addPricing(Request $request)
     {   
+        // Validating user inputs
+        $validator = Validator::make($request->all(), [
+            'pricing_name' => ['required', 'string']
+        ]);
+
+        if ($validator->fails()) {            
+            return response()->json([
+                'ok' => false,
+                'error' => Error::VALIDATION_FAILED,
+                'validation_errors' => $validator->errors()
+            ], 400);
+        }  
+
         $account = $request->user()->account;
         $pricing = $account->addPricing($request->pricing_name);
         return response()->json([
@@ -57,7 +71,7 @@ class AccountController extends Controller
         $account = $request->user()->account;
         $pricing = $account->pricing;
         // return $pricing;
-        $addon = $pricing->addAddons('reportaddon20');
+        $addon = $pricing->addAddons($request->user(), 'reportaddon20');
         return response()->json([
             'ok' => true,
             'addon' => $addon
@@ -126,9 +140,10 @@ class AccountController extends Controller
      */
     public function accountUsers(Request $request)
     {   
+        $users = $request->user()->account->users()->with('roles')->get();
         return response()->json([
             'ok' => true,
-            'users' => Account::find($request->user()->account_id)->users()->get()
+            'users' => $users
         ], 200);
         
     }

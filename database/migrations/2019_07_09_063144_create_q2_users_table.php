@@ -24,13 +24,13 @@ class CreateQ2UsersTable extends Migration
             $table->enum('gender', ['male', 'female', 'other','na'])->default('na'); 
             $table->string('profile_image')->nullable();
 
-            $table->uuid('email_token')->nullable();
+            $table->string('email_token')->unique()->nullable();
             $table->dateTime('email_verified_at')->nullable();
             $table->dateTime('phone_verified_at')->nullable(); 
 
             $table->boolean('is_admin')->default('0');  
             $table->boolean('is_active')->default('0'); 
-            $table->unsignedInteger('created_by')->nullable(); //user_id
+            $table->unsignedInteger('created_by')->nullable();
             
             $table->rememberToken();
             $table->timestamps();

@@ -23,6 +23,18 @@ class PlanController extends Controller
     }
 
     /**
+     * Get all plans for user
+     * @return Plan $plans
+     */
+    public function getUserDetails(Request $request)
+    {
+        return response()->json([
+            'ok' => true,
+            'plans' => $request->user()->plans
+        ], 200);
+    }
+
+    /**
      * Handles Plan create Request
      * @param  $request  planning details
      * @return Plan $plan

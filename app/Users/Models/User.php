@@ -7,7 +7,7 @@ use App\Roles\Traits\HasRoles;
 use App\Accounts\Traits\Accountable;
 use Laravel\Passport\HasApiTokens;
 
-use App\Notifications\VerifyEmail;
+use App\Notifications\VerifyEmailNotification;
 use App\Notifications\ResetPasswordNotification;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -60,7 +60,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function sendEmailVerificationNotification()
     {
-        $this->notify(new VerifyEmail);
+        $this->notify(new VerifyEmailNotification);
     }
 
      /**
