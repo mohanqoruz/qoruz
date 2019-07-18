@@ -91,13 +91,15 @@ Route::namespace('User')->group(function () {
  * @location App\Controllers\AccountController
  */
  Route::get('accounts.info', 'AccountController@getAccountDetails');
+
 //  Account Pricings
- Route::post('accounts.addPrcing', 'AccountController@addPricing');
- Route::post('accounts.pricing.addAddons', 'AccountController@addAddon');
- Route::get('accounts.pricings', 'AccountController@getAccountPricings');
- Route::get('accounts.activePricing', 'AccountController@getAccountActivePricing');
+Route::post('accounts.addPrcing', 'AccountController@addPricing');
+Route::post('accounts.pricing.addAddons', 'AccountController@addAddon');
+Route::get('accounts.pricings', 'AccountController@getAccountPricings');
+Route::get('accounts.activePricing', 'AccountController@getAccountActivePricing');
+
 // Account Subscriptions
- Route::get('accounts.subscriptions', 'AccountController@getAccountSubscriptions');
- Route::get('accounts.activeSubscription', 'AccountController@getAccountActiveSubscription');
- Route::get('account.users','AccountController@accountUsers');
+Route::get('accounts.subscriptions', 'AccountController@getAccountSubscriptions');
+Route::get('accounts.activeSubscription', 'AccountController@getAccountActiveSubscription');
+Route::get('account.users','AccountController@accountUsers');
 

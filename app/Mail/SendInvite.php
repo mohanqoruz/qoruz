@@ -3,10 +3,8 @@
 namespace App\Mail;
 
 use App\Users\Models\UserInvite; 
-use App\Users\Models\User; 
 
 use Illuminate\Support\Facades\URL;
-
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -21,9 +19,10 @@ class SendInvite extends Mailable
      *
      * @return void
      */
-    public function __construct(UserInvite $invite)
+    public function __construct(UserInvite $invite, $user)
     {
         $this->invite = $invite;
+        $this->user = $user;
     }
 
     /**
@@ -41,7 +40,7 @@ class SendInvite extends Mailable
         return $this->markdown('emails.invite',[
             'url' => $url,
             'invite'=> $this->invite,
-            'user' => User::find($this->invite->inviter_id)
+            'user' => $this->user
         ]);
-    }
+    }    
 }

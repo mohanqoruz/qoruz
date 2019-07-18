@@ -2,6 +2,7 @@
 
 namespace App\Subscriptions\Models;
 
+use App\Accounts\Models\Account;
 use App\Subscriptions\Models\Subscription;
 use App\Subscriptions\Traits\HasAddon;
 use Chelout\RelationshipEvents\Concerns\HasBelongsToManyEvents;
@@ -62,7 +63,6 @@ class Pricing extends Model
         });
 
         static::belongsToManyAttached(function ($relation, $parent, $ids) {
-            self::addAddonBooster($parent, $ids);
             \Log::info("Addon has been attached to pricing {$parent->name}.");
         });
     }

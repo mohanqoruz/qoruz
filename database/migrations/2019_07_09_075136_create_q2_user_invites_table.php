@@ -17,7 +17,7 @@ class CreateQ2UserInvitesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedInteger('inviter_id');
             $table->string('email');
-            $table->uuid('token');
+            $table->string('token');
             $table->boolean('status')->nullable();
             $table->timestamps();
         });

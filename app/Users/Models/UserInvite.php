@@ -3,9 +3,13 @@
 namespace App\Users\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use App\Notifications\InviteUserNotification;
 
 class UserInvite extends Model
 {
+
+    use Notifiable;
 
     /**
      * The table associated with the model.
@@ -40,4 +44,9 @@ class UserInvite extends Model
     protected $casts = [
         
     ];
+    
+    public function sendInviteNotification($user)
+    {
+        $this->notify(new InviteUserNotification($user));
+    }
 }

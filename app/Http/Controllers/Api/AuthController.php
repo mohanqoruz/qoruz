@@ -69,7 +69,7 @@ class AuthController extends Controller
         $user->gender = $request->gender;
         $user->account_id = $account->id;
         $user->is_admin = 1;
-        $user->email_token = str_random(32);
+        $user->email_token = str_random(60);
         $user->created_by = env('QORUZ_BOT_USER_ID');
         $user->save();
 
