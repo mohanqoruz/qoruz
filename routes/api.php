@@ -69,7 +69,7 @@ Route::namespace('Api')->group(function () {
 Route::namespace('User')->group(function () {
 
     // User details
-    Route::get('user.deatils', 'UserDetailsController@getUserDetails');
+    Route::get('users.info', 'UserDetailsController@getUserDetails');
 
     Route::get('user.account', 'UserDetailsController@getAccountDetails'); //account
     Route::get('user.pricings','UserDetailsController@getAllPricingDetails'); //pricings
@@ -92,10 +92,14 @@ Route::namespace('User')->group(function () {
 
 //  accounts.info
 //  accounts.addprcing [sending pricing name]
-//  account.pricings [display all pricings]
-//  account.pricing [active pricing]
-//  account.subscriptions [display all subscriptions]
-//  account.subscription [Active subscription]
-//  account.pricing.addAddons [add new addons]
-//  account.pricing.addons [add new addons]
+//  accounts.pricings [display all pricings]
+//  accounts.pricing [active pricing]
+//  accounts.subscriptions [display all subscriptions]
+//  accounts.subscription [Active subscription]
+//  accounts.pricing.addAddons [add new addons]
+
+// plans.create
+// user.plans
+// pricings.create
+// addons.create
 

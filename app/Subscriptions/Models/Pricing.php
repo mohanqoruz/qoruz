@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class Pricing extends Model
 {
     use HasAddon, HasBelongsToManyEvents;
+    
     /**
      * The table associated with the model.
      *
@@ -44,7 +45,7 @@ class Pricing extends Model
         
     ];
 
-     /**
+    /**
      * Pricing addons pivot relation event observer
      * Here fired belogns to many attaching events 
      * Adding addons booster
@@ -64,4 +65,5 @@ class Pricing extends Model
             \Log::info("Addon has been attached to pricing {$parent->name}.");
         });
     }
+
 }

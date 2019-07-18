@@ -1,16 +1,17 @@
 <?php
 
 namespace App\Http\Controllers\Api;
+
 use Intervention\Image\ImageManager;
 use App\Users\Models\User; 
+use App\Constants\Error;
+
 use Storage;
 use Illuminate\Support\Str;
-
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 
 class UserProfileController extends Controller
 {
@@ -36,7 +37,8 @@ class UserProfileController extends Controller
         if ($validator->fails()) {            
             return response()->json([
                 'ok' => false,
-                'error' => $validator->errors()
+                'error' => Error::VALIDATION_FAILED,
+                'validation_errors' => $validator->errors()
             ], 200);
         }  
 
@@ -58,7 +60,7 @@ class UserProfileController extends Controller
         } else {
             return response()->json([
                 'ok' => false,
-                'error' => 'old_password_wrong'
+                'error' => Error::OLD_PASSWORD_WRONG
             ], 200);
         }
 

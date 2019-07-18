@@ -2,7 +2,10 @@
 
 namespace App\Exceptions;
 
+use App\Constants\Error;
 use Exception;
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -13,7 +16,7 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        //
+   
     ];
 
     /**
@@ -46,6 +49,26 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        return parent::render($request, $exception);
+         // 403 Forbidden
+         if ($exception instanceof AuthorizationException)
+         {             
+             return response()->json([
+                'ok' => false,
+                'error'=> Error::NO_PERMISSION
+            ], 403);
+         }
+ 
+         // 401 Unauthorized
+         if ($exception instanceof AuthenticationException)
+         {           
+             if ($request->expectsJson()) {
+                 return response()->json([
+                     'ok' => false,
+                     'error'=> Error::NOT_AUTHED
+                 ], 401);
+             }
+         }
+
+        return parent::render($request, $exception);       
     }
 }

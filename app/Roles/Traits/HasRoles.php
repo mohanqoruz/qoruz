@@ -15,7 +15,7 @@ trait HasRoles
      */
     public function roles()
     {
-       return $this->belongsToMany(Role::class, 'q2_user_roles');
+        return $this->belongsToMany(Role::class, 'q2_user_roles');
     }
 
    /**
@@ -26,7 +26,7 @@ trait HasRoles
     public function hasRole($role): bool
     {
       if (is_string($role)) {
-            return $this->roles->contains('slug', $role);
+          return $this->roles->contains('slug', $role);
        }
     }
 
@@ -68,12 +68,12 @@ trait HasRoles
 	*/
 	public function hasAccess(array $permissions) : bool
 	{
-	      // check if the permission is available in any role
-	      foreach ($this->roles as $role) {
-	          if($role->hasAccess($permissions)) {
-	              return true;
-	          }
-	      }
-	      return false;
+      // check if the permission is available in any role
+      foreach ($this->roles as $role) {
+          if($role->hasAccess($permissions)) {
+              return true;
+          }
+      }
+      return false;
 	}	
 }

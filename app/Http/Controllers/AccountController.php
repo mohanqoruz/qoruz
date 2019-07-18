@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Users\Models\User as User;
 use App\Accounts\Models\Account as Account;
 
 use Illuminate\Http\Request;
@@ -17,6 +18,5 @@ class AccountController extends Controller
     {
         $this->middleware('auth:api');
     }
-
 }
 
