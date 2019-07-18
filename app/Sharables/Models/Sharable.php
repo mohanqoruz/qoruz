@@ -42,7 +42,7 @@ class Sharable extends Model
     ];
 
     /**
-     * Get the owning commentable model.
+     * Get the owning sharable model.
      */
     public function sharable()
     {

@@ -16,7 +16,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, Notifiable, HasRoles, Accountable,Plannable;
+    use HasApiTokens, Notifiable, HasRoles, Accountable, Plannable;
 
     /**
      * The table associated with the model.

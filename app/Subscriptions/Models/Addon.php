@@ -29,7 +29,7 @@ class Addon extends Model
      * @var array
      */
     protected $hidden = [
-       
+       'pivot'
     ];
 
     /**

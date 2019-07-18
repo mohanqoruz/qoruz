@@ -40,8 +40,10 @@ class PlanController extends Controller
      * @return Plan $plan
      */
 
-    public function create(Request $request){
-
+    public function create(Request $request)
+    {
+         $this->authorize('plans.create', User::class);
+         
          // Validating user inputs
          $validator = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:255'],

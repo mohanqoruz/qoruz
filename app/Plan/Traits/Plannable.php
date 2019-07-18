@@ -16,7 +16,7 @@ trait Plannable {
      */
     public function plans()
     {
-       return $this->hasMany('App\Plan\Models\Plan','user_id','owner_id');
+       return $this->hasMany('App\Plan\Models\Plan', 'owner_id');
     } 
 
     /**
@@ -50,10 +50,8 @@ trait Plannable {
     {   
         $owner_id = $this->id;
         $account = $this->account;
-        $pricing = $this->account->pricing();
+        $pricing = $this->account->pricing;
         
-        $sharables = new Sharable;
-
         $plan = new Plan;
         $plan->name = $plan_detail->name;
         $plan->brand_id = $plan_detail->brand_id;
@@ -65,7 +63,7 @@ trait Plannable {
         $plan->plan_optimizer = $plan_detail->plan_optimizer;
         $plan->optimizer_value = $plan_detail->optimizer_value;
         $plan->status = 'active';
-        $plan->shares()->save();
+        $plan->save();
         
         $slug = Str::slug($plan->name, '-');
         $plan->slug = $slug . '-' . $plan->id;
