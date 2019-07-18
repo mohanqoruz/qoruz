@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Constants\Error;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
@@ -21,7 +22,7 @@ class ResetPasswordController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
-        $this->middleware('signed')->only('reset');
+        // $this->middleware('signed')->only('reset');
         $this->middleware('throttle:6,1')->only('reset');
     }
 
@@ -37,7 +38,8 @@ class ResetPasswordController extends Controller
         if ($validator->fails()) {            
             return response()->json([
                 'ok' => false,
-                'error' => $validator->errors()
+                'error' => Error::VALIDATION_FAILED,
+                'validation_errors' => $validator->errors()
             ], 400);
         }  
         
@@ -80,7 +82,7 @@ class ResetPasswordController extends Controller
     {
         return response()->json([
             'ok' => false,
-            'error' => ['email' => [trans($response)]]
+            'error' => Error::INVALID_TOKEN
         ], 200);
     }
 

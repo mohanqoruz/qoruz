@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 class Pricing extends Model
 {
     use HasAddon, HasBelongsToManyEvents;
+    
     /**
      * The table associated with the model.
      *
@@ -45,7 +46,7 @@ class Pricing extends Model
         
     ];
 
-     /**
+    /**
      * Pricing addons pivot relation event observer
      * Here fired belogns to many attaching events 
      * Adding addons booster
@@ -66,16 +67,4 @@ class Pricing extends Model
         });
     }
 
-    public function subscriptions()
-    {
-        return belongsToMany('App\Subscriptions\Models\Subscription');
-    }
-
-    public function subscription()
-    {
-        return $this->subscriptions()
-        ->where('status',1)
-        ->where('account_id',$this->account_id)
-        ->first();
-    }
 }

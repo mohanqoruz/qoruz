@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Users\Models\User as User;
 use App\Accounts\Models\Account as Account;
 use Carbon\Carbon;
+use App\Constants\Error;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
@@ -47,7 +48,8 @@ class AuthController extends Controller
         if ($validator->fails()) {            
             return response()->json([
                 'ok' => false,
-                'error' => $validator->errors()
+                'error' => Error::VALIDATION_FAILED,
+                'validation_errors' => $validator->errors()
             ], 400);
         }  
 
@@ -67,6 +69,7 @@ class AuthController extends Controller
         $user->gender = $request->gender;
         $user->account_id = $account->id;
         $user->is_admin = 1;
+        $user->email_token = str_random(32);
         $user->created_by = env('QORUZ_BOT_USER_ID');
         $user->save();
 
@@ -103,7 +106,8 @@ class AuthController extends Controller
         if ($validator->fails()) {            
             return response()->json([
                 'ok' => false,
-                'error' => $validator->errors()
+                'error' => Error::VALIDATION_FAILED,
+                'validation_errors' => $validator->errors()
             ], 200);
         }  
 
@@ -124,7 +128,7 @@ class AuthController extends Controller
         } else {
             return response()->json([
                 'ok' => false,
-                'error' => 'not_authed'
+                'error' => Error::WRONG_CREDENTIALS
             ], 401);
         }
     }

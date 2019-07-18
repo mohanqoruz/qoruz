@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Constants\Error;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
-
+use Illuminate\Support\Facades\Validator;
 
 class ForgotPasswordController extends Controller
 {
@@ -31,7 +32,18 @@ class ForgotPasswordController extends Controller
      */
     public function sendResetLinkEmail(Request $request)
     {
-        $this->validateEmail($request);
+         // Validating user inputs
+         $validator = Validator::make($request->all(), [
+            'email' => ['required', 'string', 'email'],
+        ]);
+
+        if ($validator->fails()) {            
+            return response()->json([
+                'ok' => false,
+                'error' => Error::VALIDATION_FAILED,
+                'validation_errors' => $validator->errors()
+            ], 400);
+        }  
 
         $response = $this->broker()->sendResetLink(
             $this->credentials($request)
@@ -68,7 +80,8 @@ class ForgotPasswordController extends Controller
     {
         return response()->json([
             'ok' => false,
-            'error' => ['email' => [trans($response)]]
+            'error' => Error::USER_NOT_FOUND,
+            // 'validation_errors' => ['email' => [trans($response)]]
         ], 200);
     }
 }

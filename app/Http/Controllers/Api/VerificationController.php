@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Notifications\EmailVerifiedNotification;
+use App\Constants\Error;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -49,9 +50,9 @@ class VerificationController extends Controller
 
         if ($request->user()->hasVerifiedEmail()) {
             return response()->json([
-                'ok' => true,
+                'ok' => false,
                 'stuff' => 'User already have verified email!',
-                'warning' => 'already_verified'
+                'error' => Error::ALREADY_VERIFIED
             ], 422);
         }
 
@@ -61,8 +62,7 @@ class VerificationController extends Controller
 
         return response()->json([
             'ok' => true,
-            'stuff' => 'Verified Successfully!',
-            'warning' => 'email_verified'
+            'stuff' => 'Verified Successfully!'
         ], 200);
     }
 
@@ -76,9 +76,9 @@ class VerificationController extends Controller
     {
         if ($request->user()->hasVerifiedEmail()) {
             return response()->json([
-                'ok' => true,
+                'ok' => false,
                 'stuff' => 'User already have verified email!',
-                'warning' => 'already_verified'
+                'error' => Error::ALREADY_VERIFIED
             ], 422);
         }
 
@@ -86,8 +86,7 @@ class VerificationController extends Controller
 
         return response()->json([
             'ok' => true,
-            'stuff' => 'The notification has been resubmitted!',
-            'warning' => 'email_resent'
+            'stuff' => 'The notification has been resubmitted!'
         ], 200);
 
     }

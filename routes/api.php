@@ -72,7 +72,7 @@ Route::namespace('Api')->group(function () {
 Route::namespace('User')->group(function () {
 
     // User details
-    Route::get('user.deatils', 'UserDetailsController@getUserDetails');
+    Route::get('users.info', 'UserDetailsController@getUserDetails');
 
     // User invites
     Route::post('send.invite', 'InviteController@sendInvite');

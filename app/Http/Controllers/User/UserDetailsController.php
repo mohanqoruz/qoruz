@@ -24,18 +24,9 @@ class UserDetailsController extends Controller
      */
     public function getUserDetails(Request $request)
     {
-
-        $user = $request->user();
-         return [
-             'roles' => $user->roles,
-             'plan' => $user->hasRole('plan'),
-             'report' => $user->hasRole('report'),
-             'addons' => $user->hasRole('addon'),
-         ];
-
         return response()->json([
             'ok' => true,
-            'user' => $request->user()
+            'user' => $request->user()->load('roles')
         ], 200);
     }
 
