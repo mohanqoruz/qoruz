@@ -2,13 +2,13 @@
 
 namespace App\Plan\Models;
 
-use App\Sharables\Traits\IsSharable;
 use App\Sharables\Models\Sharable as Sharable;
 use Illuminate\Database\Eloquent\Model;
+use App\Sharables\Traits\IsSharable;
 
 class Plan extends Model
 {
-    // use IsSharable;
+     use IsSharable;
     /**
      * The table associated with the model.
      *
@@ -42,6 +42,11 @@ class Plan extends Model
     protected $casts = [
         'platforms' => 'array',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo('App\Users\Models\User', 'owner_id');
+    }
 
     /**
      * Get the sharable record associated with the user.

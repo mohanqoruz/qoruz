@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Account;
 
 use App\Constants\Error;
 use Illuminate\Http\Request;
@@ -8,6 +8,8 @@ use App\Users\Models\User as User;
 
 use Illuminate\Support\Facades\Validator;
 use App\Accounts\Models\Account as Account;
+use App\Http\Controllers\Controller;
+
 
 class AccountController extends Controller
 {

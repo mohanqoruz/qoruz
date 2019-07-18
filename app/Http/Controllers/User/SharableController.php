@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
 use App\Sharables\Models\Sharable;
 use App\Plan\Models\Plan;
 use App\Users\Models\User;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class SharableController extends Controller
 {

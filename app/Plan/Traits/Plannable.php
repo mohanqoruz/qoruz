@@ -16,7 +16,7 @@ trait Plannable {
      */
     public function plans()
     {
-       return $this->hasMany('App\Plan\Models\Plan','user_id','owner_id');
+       return $this->hasMany('App\Plan\Models\Plan', 'owner_id');
     } 
 
     /**
@@ -52,8 +52,6 @@ trait Plannable {
         $account = $this->account;
         $pricing = $this->account->pricing;
         
-        //$sharables = new Sharable;
-
         $plan = new Plan;
         $plan->name = $plan_detail->name;
         $plan->brand_id = $plan_detail->brand_id;

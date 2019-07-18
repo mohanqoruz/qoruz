@@ -40,8 +40,10 @@ class PlanController extends Controller
      * @return Plan $plan
      */
 
-    public function create(Request $request){
-
+    public function create(Request $request)
+    {
+         $this->authorize('plans.create', User::class);
+         
          // Validating user inputs
          $validator = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:255'],
@@ -70,12 +72,18 @@ class PlanController extends Controller
     }
 
     /**
-     * 
+     * Get users list for Shared document
+     * @param plan slug in Request
+     * @return Users $users
      */
     public function getPlanSharables(Request $request)
-    {
-       $plans =  Plan::where('slug',$request->plan)->first();
-       return $plans->shares;
+    {   
+       $plan =  Plan::where('slug',$request->plan)->first();
+       return response()->json([
+            'ok' => true,
+            'users' => $plan->getPlanSharables($request->plan)
+        ], 200);
+        
     }
     
 }

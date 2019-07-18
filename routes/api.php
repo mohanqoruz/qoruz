@@ -82,7 +82,10 @@ Route::namespace('User')->group(function () {
     // User plans
     Route::get('user.plans', 'PlanController@getUserDetails');
     Route::post('plans.create', 'PlanController@create');  
+
+    //User Plans/Report Sharable
     Route::post('plans.sharables','PlanController@getPlanSharables'); 
+    Route::post('plans.createShare','SharableController@createSharable');
     
 });  
 
@@ -93,19 +96,20 @@ Route::namespace('User')->group(function () {
  * @location App\Controllers\AccountController
  */
 Route::namespace('Account')->group(function () {
-Route::get('accounts.info', 'AccountController@getAccountDetails');
 
-//  Account Pricings
-Route::post('accounts.addPrcing', 'AccountController@addPricing');
-Route::post('accounts.pricing.addAddons', 'AccountController@addAddon');
-Route::get('accounts.pricings', 'AccountController@getAccountPricings');
-Route::get('accounts.activePricing', 'AccountController@getAccountActivePricing');
+    Route::get('accounts.info', 'AccountController@getAccountDetails');
 
-// Account Subscriptions
-Route::get('accounts.subscriptions', 'AccountController@getAccountSubscriptions');
-Route::get('accounts.activeSubscription', 'AccountController@getAccountActiveSubscription');
-Route::get('account.users','AccountController@accountUsers');
+    //  Account Pricings
+    Route::post('accounts.addPrcing', 'AccountController@addPricing');
+    Route::post('accounts.pricing.addAddons', 'AccountController@addAddon');
+    Route::get('accounts.pricings', 'AccountController@getAccountPricings');
+    Route::get('accounts.activePricing', 'AccountController@getAccountActivePricing');
+
+    // Account Subscriptions
+    Route::get('accounts.subscriptions', 'AccountController@getAccountSubscriptions');
+    Route::get('accounts.activeSubscription', 'AccountController@getAccountActiveSubscription');
+    Route::get('account.users','AccountController@accountUsers');
+
 });
 
-Route::post('plans.createShare','SharableController@createSharable');
 
