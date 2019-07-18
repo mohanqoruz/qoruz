@@ -142,7 +142,8 @@ class UserProfileController extends Controller
      * @return User $user
      */
     public function createUser(Request $request)
-    {
+    {  
+        $this->authorize('users.create', User::class);
         // Validating user inputs
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:255'],

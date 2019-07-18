@@ -58,7 +58,7 @@ Route::namespace('Api')->group(function () {
     Route::post('user.profilePhoto.update', 'UserProfileController@setUserPhoto');
     
     //Create User By Admin
-    Route::post('user.create', 'UserProfileController@createUser');
+    Route::post('users.create', 'UserProfileController@createUser');
 });
 
 /**
@@ -81,7 +81,8 @@ Route::namespace('User')->group(function () {
 
     // User plans
     Route::get('user.plans', 'PlanController@getUserDetails');
-    Route::post('plans.create', 'PlanController@create');   
+    Route::post('plans.create', 'PlanController@create');  
+    Route::post('plans.sharables','PlanController@getPlanSharables'); 
 });  
 
 /**

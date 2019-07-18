@@ -108,7 +108,7 @@ class AuthController extends Controller
                 'ok' => false,
                 'error' => Error::VALIDATION_FAILED,
                 'validation_errors' => $validator->errors()
-            ], 200);
+            ], 401);
         }  
 
         $credentials = [

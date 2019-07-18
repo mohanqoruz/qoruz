@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Plan\Models\Plan as Plan;
+use App\Sharables\Models\Sharable as Sharable;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -53,6 +54,15 @@ class PlanController extends Controller
                 'plans' => $user->plans
             ], 200);
         }
+    }
+
+    /**
+     * 
+     */
+    public function getPlanSharables(Request $request)
+    {
+       $plans =  Plan::where('slug',$request->plan)->first();
+       return $plans->shares;
     }
     
 }

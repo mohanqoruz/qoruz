@@ -1,20 +1,18 @@
 <?php
 
-namespace App\Plan\Models;
+namespace App\Sharables\Models;
 
-use App\Sharables\Traits\IsSharable;
-use App\Sharables\Models\Sharable as Sharable;
 use Illuminate\Database\Eloquent\Model;
 
-class Plan extends Model
+class Sharable extends Model
 {
-    // use IsSharable;
+
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'q2_plans';
+    protected $table = 'q2_sharables';
 
     /**
      * The attributes that are mass assignable.
@@ -40,14 +38,15 @@ class Plan extends Model
      * @var array
      */
     protected $casts = [
-        'platforms' => 'array',
+        'permissions' => 'array',
     ];
 
     /**
-     * Get the sharable record associated with the user.
+     * Get the owning commentable model.
      */
-    public function shares()
+    public function sharable()
     {
-        return $this->morphMany(Sharable::class, 'sharable');
+        return $this->morphTo();
     }
+   
 }
