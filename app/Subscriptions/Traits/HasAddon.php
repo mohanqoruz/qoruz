@@ -44,7 +44,7 @@ trait HasAddon {
     {
         foreach ($addons_ids as $addons_id) {
             $addons = Addon::find($addons_id);
-            $subscription  =$pricing->subscription();
+            $subscription  = $pricing->subscription();
             
             if ($addons && $subscription) {
                 $booster = $addon->type . '_count';

@@ -55,7 +55,10 @@ Route::namespace('Api')->group(function () {
 
     //User Profile
     Route::post('user.profile.update', 'UserProfileController@updateProfile');
-
+    Route::post('user.profilePhoto.update', 'UserProfileController@setUserPhoto');
+    
+    //Create User By Admin
+    Route::post('user.create', 'UserProfileController@createUser');
 });
 
 /**
@@ -71,12 +74,6 @@ Route::namespace('User')->group(function () {
     // User details
     Route::get('user.deatils', 'UserDetailsController@getUserDetails');
 
-    Route::get('user.account', 'UserDetailsController@getAccountDetails'); //account
-    Route::get('user.pricings','UserDetailsController@getAllPricingDetails'); //pricings
-    Route::get('user.active.pricing','UserDetailsController@getActivePricingDetails'); // pricingmo
-    Route::get('user.subscriptions','UserDetailsController@getAllSubscriptionDetails'); // subscriptions
-    Route::get('user.active.subscription','UserDetailsController@getActiveSubscriptionDetails'); //subscription
-
     // User invites
     Route::post('send.invite', 'InviteController@sendInvite');
     Route::get('accept.invite', 'InviteController@acceptInvite')->name('accept.invite');
@@ -84,18 +81,23 @@ Route::namespace('User')->group(function () {
 
     // User plans
     Route::get('user.plans', 'PlanController@getUserDetails');
-    Route::post('plans.create', 'PlanController@create');
-
-   
+    Route::post('plans.create', 'PlanController@create');   
 });  
 
-
-//  accounts.info
-//  accounts.addprcing [sending pricing name]
-//  account.pricings [display all pricings]
-//  account.pricing [active pricing]
-//  account.subscriptions [display all subscriptions]
-//  account.subscription [Active subscription]
-//  account.pricing.addAddons [add new addons]
-//  account.pricing.addons [add new addons]
+/**
+ * -------------------------------------------------------------
+ * Account Details routes
+ * -------------------------------------------------------------
+ * @location App\Controllers\AccountController
+ */
+ Route::get('accounts.info', 'AccountController@getAccountDetails');
+//  Account Pricings
+ Route::post('accounts.addPrcing', 'AccountController@addPricing');
+ Route::post('accounts.pricing.addAddons', 'AccountController@addAddon');
+ Route::get('accounts.pricings', 'AccountController@getAccountPricings');
+ Route::get('accounts.activePricing', 'AccountController@getAccountActivePricing');
+// Account Subscriptions
+ Route::get('accounts.subscriptions', 'AccountController@getAccountSubscriptions');
+ Route::get('accounts.activeSubscription', 'AccountController@getAccountActiveSubscription');
+ Route::get('account.users','AccountController@accountUsers');
 

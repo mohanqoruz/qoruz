@@ -9,7 +9,8 @@ use Chelout\RelationshipEvents\Concerns\HasBelongsToManyEvents;
 use Illuminate\Database\Eloquent\Model;
 
 class Account extends Model
-{
+{   
+
     use Subscribable, Priceable, HasBelongsToManyEvents;
 
     /**
@@ -45,6 +46,26 @@ class Account extends Model
     protected $casts = [
         
     ];
+
+     /**
+     * Get the user's name.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getNameAttribute($value)
+    {
+        return ucwords($value);
+    }
+
+    /**
+     * Relationship for Account and Users
+     */
+    public function users()
+    {
+        return $this->hasMany('App\Users\Models\User');
+    }
+    
 
     /**
      * Account pricing pivot relation event observer
