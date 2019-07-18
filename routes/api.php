@@ -83,6 +83,7 @@ Route::namespace('User')->group(function () {
     Route::get('user.plans', 'PlanController@getUserDetails');
     Route::post('plans.create', 'PlanController@create');  
     Route::post('plans.sharables','PlanController@getPlanSharables'); 
+    
 });  
 
 /**
@@ -91,7 +92,8 @@ Route::namespace('User')->group(function () {
  * -------------------------------------------------------------
  * @location App\Controllers\AccountController
  */
- Route::get('accounts.info', 'AccountController@getAccountDetails');
+Route::namespace('Account')->group(function () {
+Route::get('accounts.info', 'AccountController@getAccountDetails');
 
 //  Account Pricings
 Route::post('accounts.addPrcing', 'AccountController@addPricing');
@@ -103,4 +105,7 @@ Route::get('accounts.activePricing', 'AccountController@getAccountActivePricing'
 Route::get('accounts.subscriptions', 'AccountController@getAccountSubscriptions');
 Route::get('accounts.activeSubscription', 'AccountController@getAccountActiveSubscription');
 Route::get('account.users','AccountController@accountUsers');
+});
+
+Route::post('plans.createShare','SharableController@createSharable');
 

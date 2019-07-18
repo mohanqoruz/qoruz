@@ -68,10 +68,22 @@ class AccountController extends Controller
      */
     public function addAddon(Request $request)
     {   
+         // Validating user inputs
+         $validator = Validator::make($request->all(), [
+            'addons_name' => ['required', 'string']
+        ]);
+
+        if ($validator->fails()) {            
+            return response()->json([
+                'ok' => false,
+                'error' => Error::VALIDATION_FAILED,
+                'validation_errors' => $validator->errors()
+            ], 400);
+        }  
+
         $account = $request->user()->account;
         $pricing = $account->pricing;
-        // return $pricing;
-        $addon = $pricing->addAddons($request->user(), 'reportaddon20');
+        $addon = $pricing->addAddons($request->user(), $request->addons_name);
         return response()->json([
             'ok' => true,
             'addon' => $addon

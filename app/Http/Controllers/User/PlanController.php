@@ -60,10 +60,11 @@ class PlanController extends Controller
         }
 
         $user =  $request->user();
-        if ($user->createPlan($request)) {
+        $plan = $user->createPlan($request);
+        if ($plan) {
             return response()->json([
                 'ok' => true,
-                'plans' => $user->plans
+                'plans' => $plan
             ], 200);
         }
     }
