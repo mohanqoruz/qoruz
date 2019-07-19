@@ -5,7 +5,9 @@ namespace App\Http\Controllers\User;
 use App\Sharables\Models\Sharable;
 use App\Plan\Models\Plan;
 use App\Users\Models\User;
+use App\Constants\Error;
 
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -23,21 +25,32 @@ class SharableController extends Controller
     }
 
      /**
-     *  Create a new Sharable
+     *  Create a new Sharable Plan
      *  @return Json Account $account
      */
-    public function createSharable(Request $request)
-    {
-        $plan = Plan::find($request->plan_id);
+    public function sharePlan(Request $request)
+    {   
+        // Validating user inputs
+        $validator = Validator::make($request->all(), [
+            'sharable_id' => 'required','exists:q2_plans,id',
+            'share_to' => 'required|exists:q2_users,email', // validating user,
+            'permission' => 'string'
+        ]);
+
+        if ($validator->fails()) {            
+            return response()->json([
+                'ok' => false,
+                'error' => Error::VALIDATION_FAILED,
+                'validation_errors' => $validator->errors()
+            ], 401);
+        }
+
+        $plan = Plan::find($request->sharable_id);
         $user = User::where('email',$request->share_to)->first();
-        $sharable = new Sharable;
-        $sharable->share_by = $request->user()->id;
-        $sharable->share_to = $user->id;
-        $sharable_details = $plan->shares()->save($sharable);	
+        $plan->shareTo($request->user()->id, $user->id, $request->permission);
 
         return response()->json([
             'ok' => true,
-            'sharable' => $sharable_details
         ], 200);
     }
 
