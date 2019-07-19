@@ -19,11 +19,15 @@ trait IsSharable {
     
     public function shareTo($from, $to, $permisson='')
     {   
-        $this->shares()->create([
+        $sharable =  $this->shares()->create([
            'share_to' => $to,
            'share_by' => $from,
            'permissions' => $this->parsePermissions($permisson)
         ]);
+
+        $sharable_url = '';
+
+        $to->sendShareNotification($sharable_url);
     }
 
     /**
@@ -34,14 +38,21 @@ trait IsSharable {
     {
        $readonly = true;
        $edit = false;
+       $feedback = false;
 
        if ($permission == 'edit') {
            $edit = true;
+           $feedback = true;
+       }
+
+       if ($permission == 'feedback') {
+            $feedback = true;
        }
 
        return  [
-          'readonly' => $readonly,
-          'edit' => $edit
+          'view' => $readonly,
+          'edit' => $edit,
+          'feedback' => $feedback
        ];
     }
 
