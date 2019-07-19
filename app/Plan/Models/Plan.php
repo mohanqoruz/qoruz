@@ -9,6 +9,7 @@ use App\Sharables\Traits\IsSharable;
 class Plan extends Model
 {
      use IsSharable;
+
     /**
      * The table associated with the model.
      *
@@ -46,13 +47,5 @@ class Plan extends Model
     public function user()
     {
         return $this->belongsTo('App\Users\Models\User', 'owner_id');
-    }
-
-    /**
-     * Get the sharable record associated with the user.
-     */
-    public function shares()
-    {
-        return $this->morphMany(Sharable::class, 'sharable');
     }
 }

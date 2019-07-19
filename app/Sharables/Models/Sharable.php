@@ -20,7 +20,7 @@ class Sharable extends Model
      * @var array
      */
     protected $fillable = [
-        
+        'share_by', 'share_to', 'permissions'
     ];
 
     /**

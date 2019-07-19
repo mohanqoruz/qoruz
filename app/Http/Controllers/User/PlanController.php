@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Plan\Models\Plan as Plan;
-use App\Sharables\Models\Sharable as Sharable;
-
-use Illuminate\Support\Facades\Validator;
+use App\Constants\Error;
 use Illuminate\Http\Request;
+
+use App\Plan\Models\Plan as Plan;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
+use App\Sharables\Models\Sharable as Sharable;
 
 class PlanController extends Controller
 {
@@ -57,7 +58,8 @@ class PlanController extends Controller
         if ($validator->fails()) {            
             return response()->json([
                 'ok' => false,
-                'error' => $validator->errors()
+                'error' => Error::VALIDATION_FAILED,
+                'validation_errors' => $validator->errors()
             ], 404);
         }
 
@@ -77,11 +79,24 @@ class PlanController extends Controller
      * @return Users $users
      */
     public function getPlanSharables(Request $request)
-    {   
-       $plan =  Plan::where('slug',$request->plan)->first();
+    {  
+        // Validating user inputs
+        $validator = Validator::make($request->all(), [
+            'plan_name' => ['required', 'string']
+        ]);
+        
+        if ($validator->fails()) {            
+            return response()->json([
+                'ok' => false,
+                'error' => Error::VALIDATION_FAILED,
+                'validation_errors' => $validator->errors()
+            ], 404);
+        }
+
+       $plan =  Plan::where('slug',$request->plan_name)->first();
        return response()->json([
             'ok' => true,
-            'users' => $plan->getPlanSharables($request->plan)
+            'users' => $plan->getPlanSharables($request->plan_name)
         ], 200);
         
     }

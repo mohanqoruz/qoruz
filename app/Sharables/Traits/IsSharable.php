@@ -9,30 +9,39 @@ use App\Sharables\Models\Sharable as Sharable;
 
 trait IsSharable {
 
-	 /**
-     * Get the sharable record associated with the user.
+   /**
+     * Get all of the sharable.
      */
-    public function sharable()
+    public function shares()
     {
-        return $this->morphTo();
+        return $this->morphMany('App\Sharables\Models\Sharable', 'sharable');
     }
     
+    public function shareTo($from, $to, $permisson)
+    {
+        $this->shares()->create([
+           'share_to' => $to,
+           'share_by' => $from,
+           'permissions' => $this->parsePermissions($permission)
+        ]);
+    }
 
     /**
-     * Get users list for Shared document
-     * @return Users $users
+     * Parsing and set permissions
+     * @return [array] $permissions
      */
-    public function getPlanSharables($plan)
+    private function parsePermissions($permission)
     {
-       $plans =  Plan::where('slug',$plan)->first();
-       $users = array();
-       foreach($plans->shares as $share){
-        $users[] = $share->share_to;
-       }
-       $users =  User::whereIn('id', $users)->get();
-       return $users;
-    }
+       $readonly = true;
+       $edit = false;
 
-   
-    
- }
+       if ($permission == 'edit') {
+           $edit = true;
+       }
+
+       return  [
+          'readonly' => $readonly,
+          'edit' => $edit
+       ];
+    }
+}

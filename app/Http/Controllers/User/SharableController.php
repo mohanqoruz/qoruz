@@ -26,14 +26,12 @@ class SharableController extends Controller
      *  Create a new Sharable
      *  @return Json Account $account
      */
-    public function createSharable(Request $request)
+    public function createSharable(Request $request, Plan $plan)
     {
+
         $plan = Plan::find($request->plan_id);
         $user = User::where('email',$request->share_to)->first();
-        $sharable = new Sharable;
-        $sharable->share_by = $request->user()->id;
-        $sharable->share_to = $user->id;
-        $sharable_details = $plan->shares()->save($sharable);	
+        $plan->shareTo($request->user(), $user, $permisions);
 
         return response()->json([
             'ok' => true,
