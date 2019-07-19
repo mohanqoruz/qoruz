@@ -73,32 +73,6 @@ class PlanController extends Controller
         }
     }
 
-    /**
-     * Get users list for Shared document
-     * @param plan slug in Request
-     * @return Users $users
-     */
-    public function getPlanSharables(Request $request)
-    {  
-        // Validating user inputs
-        $validator = Validator::make($request->all(), [
-            'plan_name' => ['required', 'string']
-        ]);
-        
-        if ($validator->fails()) {            
-            return response()->json([
-                'ok' => false,
-                'error' => Error::VALIDATION_FAILED,
-                'validation_errors' => $validator->errors()
-            ], 404);
-        }
-
-       $plan =  Plan::where('slug',$request->plan_name)->first();
-       return response()->json([
-            'ok' => true,
-            'users' => $plan->getPlanSharables($request->plan_name)
-        ], 200);
-        
-    }
+  
     
 }

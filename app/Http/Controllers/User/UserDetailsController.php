@@ -30,5 +30,26 @@ class UserDetailsController extends Controller
         ], 200);
     }
 
+    /**
+     * Get  all the documnets shared with me
+     */
+    public function sharedWithMe(Request $request)
+    {
+        return response()->json([
+            'ok' => true,
+            'sharedwithme' => $request->user()->sharedWithMe
+        ], 200);
+    }
+
+    /**
+     * Get all documents shared by me
+     */
+    public function sharedBy(Request $request)
+    {
+        return response()->json([
+            'ok' => true,
+            'sharedby' => $request->user()->sharedBy
+        ], 200);
+    }
     
 }
