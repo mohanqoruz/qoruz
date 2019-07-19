@@ -152,7 +152,7 @@ class AccountController extends Controller
      * Get Account Related Users
      * @return Users $users
      */
-    public function accountUsers(Request $request)
+    public function accountUsersList(Request $request)
     {   
         $users = $request->user()->account->users()->with('roles')->get();
         return response()->json([

@@ -84,16 +84,17 @@ class UserProfileController extends Controller
         if ($validator->fails()) {            
             return response()->json([
                 'ok' => false,
-                'error' => $validator->errors()
+                'error' => Error::VALIDATION_FAILED,
+                'validation_errors' => $validator->errors()
             ], 401);
         }  
 
         $user = User::find($request->user()->id);
         $user->name = $request->name;
         $user->phone = $request->phone;
-        $user->gender = $request->gender;
-       
+        $user->gender = $request->gender;       
         $user->save();
+
         return response()->json([
             'ok' => true,
             'stuff' => 'Profile updated successfully!'
@@ -115,14 +116,16 @@ class UserProfileController extends Controller
         if ($validator->fails()) {            
             return response()->json([
                 'ok' => false,
-                'error' => $validator->errors()
+                'error' => Error::VALIDATION_FAILED,
+                'validation_errors' => $validator->errors()
             ], 400);
         }
+
         $user = User::find($request->user()->id);
         $photo = $request->profile_image;
         $slug = Str::slug($request->user()->name, '-');
         $imagename = $request->user()->id.'_'.$slug.'.'.$photo->getClientOriginalExtension();
-        //if resize is needed it is done in this step
+
         $image = \Image::make($photo);
         $user->profile_image =  $imagename;
         $picture = (string) $image->encode();

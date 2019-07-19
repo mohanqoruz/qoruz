@@ -53,9 +53,9 @@ Route::namespace('Api')->group(function () {
     // Change Passowrd
     Route::post('change.password', 'UserProfileController@changePassword');
 
-    //User Profile
-    Route::post('user.profile.update', 'UserProfileController@updateProfile');
-    Route::post('user.profilePhoto.update', 'UserProfileController@setUserPhoto');
+    // User Profile
+    Route::post('users.profile.update', 'UserProfileController@updateProfile');
+    Route::post('users.setPhoto', 'UserProfileController@setUserPhoto');
     
     //Create User By Admin
     Route::post('users.create', 'UserProfileController@createUser');
@@ -80,7 +80,7 @@ Route::namespace('User')->group(function () {
     Route::post('resend.invite','InviteController@resendInvite');
 
     // User plans
-    Route::get('user.plans', 'PlanController@getUserDetails');
+    Route::get('users.plans', 'PlanController@getUserDetails');
     Route::post('plans.create', 'PlanController@create');  
 
     //User Plans/Report Sharable
@@ -108,7 +108,7 @@ Route::namespace('Account')->group(function () {
     // Account Subscriptions
     Route::get('accounts.subscriptions', 'AccountController@getAccountSubscriptions');
     Route::get('accounts.activeSubscription', 'AccountController@getAccountActiveSubscription');
-    Route::get('account.users','AccountController@accountUsers');
+    Route::get('accounts.users.list','AccountController@accountUsersList');
 
 });
 
