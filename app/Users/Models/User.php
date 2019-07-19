@@ -6,7 +6,8 @@ use App\Plan\Traits\Plannable;
 use App\Roles\Traits\HasRoles;
 use App\Accounts\Traits\Accountable;
 use Laravel\Passport\HasApiTokens;
-use App\Sharables\Traits\IsSharable;
+use App\Sharables\Traits\SharedDetails;
+
 
 use App\Notifications\VerifyEmailNotification;
 use App\Notifications\ResetPasswordNotification;
@@ -17,7 +18,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, Notifiable, HasRoles, Accountable, Plannable,IsSharable;
+    use HasApiTokens, Notifiable, HasRoles, Accountable, Plannable,SharedDetails;
 
     /**
      * The table associated with the model.

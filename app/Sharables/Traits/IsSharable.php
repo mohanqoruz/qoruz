@@ -17,12 +17,12 @@ trait IsSharable {
         return $this->morphMany('App\Sharables\Models\Sharable', 'sharable');
     }
     
-    public function shareTo($from, $to, $permisson)
-    {
+    public function shareTo($from, $to, $permisson='')
+    {   
         $this->shares()->create([
            'share_to' => $to,
            'share_by' => $from,
-           'permissions' => $this->parsePermissions($permission)
+           'permissions' => $this->parsePermissions($permisson)
         ]);
     }
 
@@ -44,4 +44,6 @@ trait IsSharable {
           'edit' => $edit
        ];
     }
+
+    
 }

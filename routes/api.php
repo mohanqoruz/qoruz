@@ -51,7 +51,7 @@ Route::namespace('Api')->group(function () {
     Route::post('reset.password', 'ResetPasswordController@reset')->name('reset.password');
 
     // Change Passowrd
-    Route::post('change.password', 'UserProfileController@changePassword');
+    //Route::post('change.password', 'UserProfileController@changePassword');
 
     // User Profile
     Route::post('users.profile.update', 'UserProfileController@updateProfile');
@@ -85,7 +85,7 @@ Route::namespace('User')->group(function () {
 
     //User Plans/Report Sharable
     Route::post('plans.sharables','PlanController@getPlanSharables'); 
-    // Route::post('plans.createShare','SharableController@createSharable');
+    Route::post('sharePlan','SharableController@sharePlan');
     
 });  
 
