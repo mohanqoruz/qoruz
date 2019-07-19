@@ -94,9 +94,9 @@ class User extends Authenticatable implements MustVerifyEmail
      * @param  string  
      * @return void
      */
-    public function sendShareNotification()
+    public function sendShareNotification($sender,$url)
     {
-        $this->notify(new ShareNotification);
+        $this->notify(new ShareNotification($sender,$url));
     }
 }
 

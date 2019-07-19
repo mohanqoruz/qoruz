@@ -20,6 +20,8 @@ class CreateQ2SharablesTable extends Migration
             $table->unsignedInteger('share_to');
             $table->morphs('sharable');
             $table->jsonb('permissions')->nullable(); 
+            $table->string('token');
+            $table->boolean('is_active')->default(1);
             $table->timestamps();
             $table->softDeletes();  
         });

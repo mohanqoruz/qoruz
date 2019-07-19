@@ -17,17 +17,19 @@ trait IsSharable {
         return $this->morphMany('App\Sharables\Models\Sharable', 'sharable');
     }
     
-    public function shareTo($from, $to, $permisson='')
+    public function shareTo($sender, $receiver, $permisson='')
     {   
+        $token = \Str::random(60).time();
+        
         $sharable =  $this->shares()->create([
-           'share_to' => $to,
-           'share_by' => $from,
-           'permissions' => $this->parsePermissions($permisson)
+           'share_to' => $receiver->id,
+           'share_by' => $sender->id,
+           'permissions' => $this->parsePermissions($permisson),
+           'token' => $token
         ]);
 
-        $sharable_url = '';
-
-        $to->sendShareNotification($sharable_url);
+        $sharable_url = $this->buildUrl($sharable->token);
+        $receiver->sendShareNotification($sender, $sharable_url);
     }
 
     /**
@@ -54,6 +56,15 @@ trait IsSharable {
           'edit' => $edit,
           'feedback' => $feedback
        ];
+    }
+
+    /**
+     * Generate URL
+     */
+    private function buildUrl($token)
+    {
+        $baseUrl = env('APP_URL').'/api/shared/';
+        return url($baseUrl.$token);
     }
 
     

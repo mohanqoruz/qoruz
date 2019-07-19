@@ -2,6 +2,8 @@
 
 namespace App\Notifications;
 
+use App\Mail\SharedMail as Mailable;
+
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -16,9 +18,10 @@ class ShareNotification extends Notification
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($sender, $url)
     {
-        //
+        $this->url = $url;
+        $this->sender = $sender;
     }
 
     /**
@@ -39,11 +42,8 @@ class ShareNotification extends Notification
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toMail($notifiable)
-    {
-        return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+    {   
+        return (new Mailable($notifiable, $this->sender, $this->url))->to($notifiable->email);
     }
 
     /**

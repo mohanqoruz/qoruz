@@ -47,7 +47,7 @@ class SharableController extends Controller
 
         $plan = Plan::find($request->sharable_id);
         $user = User::where('email',$request->share_to)->first();
-        $plan->shareTo($request->user()->id, $user->id, $request->permission);
+        $plan->shareTo($request->user(), $user, $request->permission);
 
         return response()->json([
             'ok' => true,
