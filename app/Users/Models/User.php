@@ -11,6 +11,7 @@ use App\Sharables\Traits\SharedDetails;
 
 use App\Notifications\VerifyEmailNotification;
 use App\Notifications\ResetPasswordNotification;
+use App\Notifications\ShareNotification;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -55,16 +56,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'is_admin' => 'boolean',
     ];
 
-    /**
-     * Send the email verification notification.
-     *
-     * @return void
-     */
-    public function sendEmailVerificationNotification()
-    {
-        $this->notify(new VerifyEmailNotification);
-    }
-
      /**
      * Get the user's  name.
      *
@@ -77,6 +68,16 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * Send the email verification notification.
+     *
+     * @return void
+     */
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new VerifyEmailNotification);
+    }    
+
+    /**
      * Send the password reset notification.
      *
      * @param  string  $token
@@ -85,6 +86,17 @@ class User extends Authenticatable implements MustVerifyEmail
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPasswordNotification($token));
+    }
+
+     /**
+     * Send the plan/report shared notification.
+     *
+     * @param  string  
+     * @return void
+     */
+    public function sendShareNotification()
+    {
+        $this->notify(new ShareNotification);
     }
 }
 
