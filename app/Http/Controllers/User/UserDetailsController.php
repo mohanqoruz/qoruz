@@ -18,6 +18,17 @@ class UserDetailsController extends Controller
         $this->middleware('verified');
     }
 
+    /**
+     * Get all plans for user
+     * @return Plan $plans
+     */
+    public function getUserPlanDetails(Request $request)
+    {
+        return response()->json([
+            'ok' => true,
+            'plans' => $request->user()->plans
+        ], 200);
+    }
 
     /**
      *  Get the authenticated User
