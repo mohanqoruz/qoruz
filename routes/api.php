@@ -84,8 +84,9 @@ Route::namespace('User')->group(function () {
     Route::post('plans.create', 'PlanController@create');  
 
     //User Plans/Report Sharable
-    Route::post('plans.sharables','PlanController@getPlanSharables'); 
     Route::post('sharePlan','SharableController@sharePlan');
+    Route::get('users.sharedwithme','UserDetailsController@sharedWithMe');
+    Route::get('users.sharedby','UserDetailsController@sharedBy');
     
 });  
 
