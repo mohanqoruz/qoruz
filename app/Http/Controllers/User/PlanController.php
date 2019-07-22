@@ -21,6 +21,7 @@ class PlanController extends Controller
     public function __construct()
     {
         $this->middleware('auth:api');
+        $this->middleware('subscription');
     }
 
     /**
@@ -66,6 +67,7 @@ class PlanController extends Controller
         $user =  $request->user();
         $plan = $user->createPlan($request);
         if ($plan) {
+            $request->user()->account->decreasePlanCount(10);
             return response()->json([
                 'ok' => true,
                 'plans' => $plan

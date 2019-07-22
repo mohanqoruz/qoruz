@@ -34,7 +34,7 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('plans.create', function ($user) {
-            return $user->hasRole('plan') || $user->hasRole('admin') && $user->account->subcription->canCreatePlan();
+            return $user->hasRole('plan') || $user->hasRole('admin');
         });
 
         Gate::define('add.pricing', function ($user) {
