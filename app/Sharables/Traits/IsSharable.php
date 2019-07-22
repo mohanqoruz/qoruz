@@ -3,7 +3,7 @@
 namespace App\Sharables\Traits;
 use App\Users\Models\User as User;
 use Illuminate\Http\Request;
-use App\Plan\Models\Plan as Plan;
+use App\Plans\Models\Plan as Plan;
 use App\Sharables\Models\Sharable as Sharable;
 
 
