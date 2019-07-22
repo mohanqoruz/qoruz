@@ -43,6 +43,8 @@ class AccountController extends Controller
      */
     public function addPricing(Request $request)
     {   
+        $this->authorize('add.pricing', User::class);
+
         // Validating user inputs
         $validator = Validator::make($request->all(), [
             'pricing_name' => ['required', 'string']
@@ -70,6 +72,8 @@ class AccountController extends Controller
      */
     public function addAddon(Request $request)
     {   
+        $this->authorize('add.addons', User::class);
+
          // Validating user inputs
          $validator = Validator::make($request->all(), [
             'addons_name' => ['required', 'string']

@@ -62,6 +62,40 @@ class Error  extends Facade {
      */
     const NO_PERMISSION = 'no_permission';
 
+    /**
+     * Constant representing an no subscription
+     *
+     * @var string
+     */
+    const NO_SUBSCRIPTION = 'no_subscription';
+
+    /**
+     * Constant representing an subscription ended
+     *
+     * @var string
+     */
+    const SUBSCRIPTION_ENDED = 'subscription_ended';
+
+    /**
+     * Constant representing an plan limit exceeded
+     *
+     * @var string
+     */
+    const PLAN_LIMIT_EXCEEDED = 'plan_limit_exceeded';
+
+    /**
+     * Constant representing an profile view limit exceeded
+     *
+     * @var string
+     */
+    const PROFILE_VIEW_LIMIT_EXCEEDED = 'profile_view_limit_excedded';
+
+    /**
+     * Constant representing an too many attempts
+     *
+     * @var string
+     */
+    const TOO_MANY_ATTEMPTS = 'too_many_attempts';
 
     /**
      * Get the registered name of the component.

@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use App\Constants\Error;
 
 class SubscriptionMiddleware
 {
@@ -13,19 +14,58 @@ class SubscriptionMiddleware
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next, $feature = '')
     {
         $account = $request->user()->account;
 
         if (! $account->isSubscriptionActive()) {
-            return response()->jsson([
-                'test' => 'jjjj'
+            return response()->json([
+                'ok' => false,
+                'error' => Error::SUBSCRIPTION_ENDED
             ]);
         }
 
-        if (! $account->canCreatePlan()) {
+        if ($feature == 'profile_view') {
             return response()->json([
-                'test' => 'ok'
+                'ok' => false,
+                'error' => Error::SUBSCRIPTION_ENDED
+            ]);
+        }
+
+        if ($feature == 'create_report') {
+            return response()->json([
+                'ok' => false,
+                'error' => Error::SUBSCRIPTION_ENDED
+            ]);
+        }
+
+        if ($feature == 'referesh_report') {
+            return response()->json([
+                'ok' => false,
+                'error' => Error::SUBSCRIPTION_ENDED
+            ]);
+        }
+
+        if ($feature == 'create_plan') {
+            if (!$account->canCreatePlan()) {
+                return response()->json([
+                    'ok' => false,
+                    'error' => Error::PLAN_LIMIT_EXCEEDED
+                ]);
+            }
+        }
+
+        if ($feature == 'create_user') {
+            return response()->json([
+                'ok' => false,
+                'error' => Error::SUBSCRIPTION_ENDED
+            ]);
+        }
+
+        if ($feature == 'use_brand') {
+            return response()->json([
+                'ok' => false,
+                'error' => Error::SUBSCRIPTION_ENDED
             ]);
         }
 

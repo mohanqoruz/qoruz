@@ -73,8 +73,10 @@ class AuthController extends Controller
         $user->created_by = env('QORUZ_BOT_USER_ID');
         $user->save();
 
-        // Assign Role
-        $user->assignRole('admin');
+        // Assign Roles
+        $user->assignRole('plan');
+        $user->assignRole('report');
+        $user->assignRole('addon');
 
         // Send the email verification notification.
         $user->sendEmailVerificationNotification();

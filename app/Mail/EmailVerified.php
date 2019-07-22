@@ -32,7 +32,7 @@ class EmailVerified extends Mailable
     public function build()
     {
         $url =  URL::temporarySignedRoute(
-            'verification.verify', now()->addMinutes(60 * 24), ['id' => $this->user->id]
+            'verification.verify', now()->addMinutes(60 * 24), ['token' => $this->user->email_token]
         );
 
         return $this->markdown('emails.verify',[

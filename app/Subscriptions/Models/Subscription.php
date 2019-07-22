@@ -38,6 +38,6 @@ class Subscription extends Model
      * @var array
      */
     protected $casts = [
-        
+        'status' => 'boolean'
     ];
 }

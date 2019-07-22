@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Notifications\EmailVerifiedNotification;
 use App\Constants\Error;
+use App\Users\Models\User;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Auth\Events\Verified;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\VerifiesEmails;
+use App\Notifications\EmailVerifiedNotification;
 use Illuminate\Auth\Access\AuthorizationException;
 
 class VerificationController extends Controller
@@ -22,18 +24,9 @@ class VerificationController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api');
-        $this->middleware('signed')->only('verify');
+        $this->middleware('auth:api')->only('resend');
+        // $this->middleware('signed')->only('verify');
         $this->middleware('throttle:6,1')->only('verify', 'resend');
-    }
-
-    /**
-     * Show the email verification notice.
-     *
-     */
-    public function show()
-    {
-        //
     }
 
     /**
@@ -43,12 +36,33 @@ class VerificationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function verify(Request $request)
-    {
-        if ($request->route('id') != $request->user()->getKey()) {
-            throw new AuthorizationException;
+    {        
+        // if ($request->route('id') != $request->user()->getKey()) {
+        //     throw new AuthorizationException;
+        // }
+
+         // Validating user inputs
+        $validator = Validator::make($request->all(), [
+            'token' => ['required']
+        ]);
+
+        if ($validator->fails()) {            
+            return response()->json([
+                'ok' => false,
+                'error' => Error::VALIDATION_FAILED,
+                'validation_errors' => $validator->errors()
+            ], 400);
+        }  
+
+        $user = User::where('email_token', $request->token)->first();
+        if (! $user) {
+            return response()->json([
+                'ok' => false,
+                'error' => Error::INVALID_TOKEN
+            ], 400);
         }
 
-        if ($request->user()->hasVerifiedEmail()) {
+        if ($user->hasVerifiedEmail()) {
             return response()->json([
                 'ok' => false,
                 'stuff' => 'User already have verified email!',
@@ -56,8 +70,8 @@ class VerificationController extends Controller
             ], 422);
         }
 
-        if ($request->user()->markEmailAsVerified()) {
-            event(new Verified($request->user()));
+        if ($user->markEmailAsVerified()) {
+            event(new Verified($user));
         }
 
         return response()->json([

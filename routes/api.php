@@ -43,7 +43,7 @@ Route::namespace('Api')->group(function () {
     Route::get('logout', 'AuthController@logout');
 
     // // Email Verification
-    Route::get('email.verify/{id}', 'VerificationController@verify')->name('verification.verify');
+    Route::get('email.verify', 'VerificationController@verify')->name('verification.verify');
     Route::get('email.resent', 'VerificationController@resend')->name('verification.resend?');    
 
     // Forget password

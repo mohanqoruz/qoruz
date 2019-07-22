@@ -14,8 +14,8 @@ class RoleTableSeeder extends Seeder
     {
 
         $admin = Role::create([
-            'name' => 'Admin', 
-            'slug' => 'admin',
+            'name' => 'Super Admin', 
+            'slug' => 'super_admin',
             'permissions' => '{}'
         ]);
 

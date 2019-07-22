@@ -6,6 +6,8 @@ use App\Constants\Error;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Routing\Exceptions\InvalidSignatureException;
+use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -68,6 +70,27 @@ class Handler extends ExceptionHandler
                  ], 401);
              }
          }
+
+         // Wrong Token
+        if ($exception instanceof InvalidSignatureException) {
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'ok' => false,
+                    'error'=> Error::INVALID_TOKEN
+                ], 404);
+            }
+         }
+
+        //  Throttle 
+        if ($exception instanceof ThrottleRequestsException) {
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'ok' => false,
+                    'error'=> Error::TOO_MANY_ATTEMPTS
+                ], 429);
+            }
+         }
+
 
         return parent::render($request, $exception);       
     }
