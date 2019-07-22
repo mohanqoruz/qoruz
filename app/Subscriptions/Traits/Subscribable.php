@@ -35,7 +35,7 @@ trait Subscribable {
      */
      public function isSubscriptionActive() : bool
      {
-        return ($this->subscription()) ? true : false ;
+        return ($this->subscription->status) ? true : false ;
      }
 
      /**
@@ -45,7 +45,7 @@ trait Subscribable {
      */
      public function subscriptionEnds() 
      {  
-        $subscription = $this->subscription();
+        $subscription = $this->subscription;
         return $subscription->ends_at;
      }
 
@@ -86,7 +86,7 @@ trait Subscribable {
       */
       public function canViewProfile()
       {
-         $subscription = $this->subscription();
+         $subscription = $this->subscription;
          return ($subscription->profiles_count) ? true : false ;
       }
 
@@ -96,7 +96,7 @@ trait Subscribable {
        */
       public function canReportRefresh()
       {
-         $subscription = $this->subscription();
+         $subscription = $this->subscription;
          return ($subscription->report_refresh) ? true : false ;
       }
 
@@ -106,7 +106,7 @@ trait Subscribable {
        */
       public function canCreateReport()
       {
-         $subscription = $this->subscription();
+         $subscription = $this->subscription;
          return ($subscription->reports_count) ? true : false ;
       }
 
@@ -116,7 +116,7 @@ trait Subscribable {
        */
       public function canCreatePlan()
       {
-         $subscription = $this->subscription();
+         $subscription = $this->subscription;
          return ($subscription->plans_count) ? true : false ;
       }
 
@@ -126,7 +126,7 @@ trait Subscribable {
        */
       public function canCreateUser()
       {
-         $subscription = $this->subscription();
+         $subscription = $this->subscription;
          return ($subscription->users_count) ? true : false ;
       }
 
@@ -136,7 +136,7 @@ trait Subscribable {
        */
       public function canUseBrand()
       {
-         $subscription = $this->subscription();
+         $subscription = $this->subscription;
          return ($subscription->brands_count) ? true : false ;
       }
 
@@ -146,7 +146,7 @@ trait Subscribable {
        */
       public function decreaseProfileView($count = 1)
       {
-         $subscription = $this->subscription();
+         $subscription = $this->subscription;
          $subscription->decrement('profile_views', $count);
          return $subscription;
       }
@@ -157,7 +157,7 @@ trait Subscribable {
        */
       public function decreaseReportCount($count = 1)
       {
-         $subscription = $this->subscription();
+         $subscription = $this->subscription;
          $subscription->decrement('reports_count', $count);
          return $subscription;
       }
@@ -168,7 +168,7 @@ trait Subscribable {
        */
       public function decreasePlanCount($count = 1)
       {
-         $subscription = $this->subscription();
+         $subscription = $this->subscription;
          $subscription->decrement('plans_count', $count);
          return $subscription;
       }
@@ -179,7 +179,7 @@ trait Subscribable {
        */
       public function decreaseBrandCount($count = 1)
       {
-         $subscription = $this->subscription();
+         $subscription = $this->subscription;
          $subscription->decrement('brands_count', $count);
          return $subscription;
       }
@@ -190,7 +190,7 @@ trait Subscribable {
        */
       public function decreaseUserCount($count = 1)
       {
-         $subscription = $this->subscription();
+         $subscription = $this->subscription;
          $subscription->decrement('users_count', $count);
          return $subscription;
       }
