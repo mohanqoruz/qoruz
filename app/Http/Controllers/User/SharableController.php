@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Sharables\Models\Sharable;
-use App\Plan\Models\Plan;
+use App\Plans\Models\Plan;
 use App\Users\Models\User;
 use App\Constants\Error;
 

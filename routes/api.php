@@ -30,7 +30,7 @@ Route::get('/', function () {
  * -------------------------------------------------------------
  * User API auth routes
  * -------------------------------------------------------------
- * @location App\Controller\Auth\ApiAuthController]
+ * @location App\Controller\Auth\ApiAuthController
  * 
  */
 Route::namespace('Api')->group(function () {

@@ -20,7 +20,7 @@ trait SharedDetails {
 
     public function sharedPlans()
     {
-        return $this->sharedBy()->where('sharable_type','App\Plan\Models\Plan')->get();
+        return $this->sharedBy()->where('sharable_type','App\Plans\Models\Plan')->get();
     }
 
 }

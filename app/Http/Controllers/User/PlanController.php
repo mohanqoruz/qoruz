@@ -5,7 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Constants\Error;
 use Illuminate\Http\Request;
 
-use App\Plan\Models\Plan as Plan;
+use App\Plans\Models\Plan as Plan;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Sharables\Models\Sharable as Sharable;

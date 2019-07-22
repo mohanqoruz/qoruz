@@ -2,7 +2,7 @@
 
 namespace App\Users\Models;
 
-use App\Plan\Traits\Plannable;
+use App\Plans\Traits\Plannable;
 use App\Roles\Traits\HasRoles;
 use App\Accounts\Traits\Accountable;
 use Laravel\Passport\HasApiTokens;
