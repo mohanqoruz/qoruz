@@ -1,18 +1,20 @@
 <?php
 
-namespace App\Sharables\Models;
+namespace App\Profiles\Models;
 
+use App\Profiles\Traits\Profileable;
 use Illuminate\Database\Eloquent\Model;
 
-class Sharable extends Model
+class Twitter extends Model
 {
-
+    use Profileable;
+    
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'q2_sharables';
+    protected $table = 'twitter';
 
     /**
      * The attributes that are mass assignable.
@@ -20,7 +22,7 @@ class Sharable extends Model
      * @var array
      */
     protected $fillable = [
-        'share_by', 'share_to', 'permissions','token'
+        
     ];
 
     /**
@@ -29,7 +31,7 @@ class Sharable extends Model
      * @var array
      */
     protected $hidden = [
-       'token'
+       
     ];
 
     /**
@@ -38,15 +40,6 @@ class Sharable extends Model
      * @var array
      */
     protected $casts = [
-        'permissions' => 'array',
-    ];
 
-    /**
-     * Get the owning sharable model.
-     */
-    public function sharable()
-    {
-        return $this->morphTo();
-    }
-   
+    ];
 }
