@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateListProfilesTable extends Migration
+class CreateQ2ListProfilesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateListProfilesTable extends Migration
      */
     public function up()
     {
-        Schema::create('list_profiles', function (Blueprint $table) {
+        Schema::create('q2_list_profiles', function (Blueprint $table) {
             $table->bigIncrements('id');
 
             $table->unsignedInteger('list_id');
@@ -35,6 +35,6 @@ class CreateListProfilesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('list_profiles');
+        Schema::dropIfExists('q2_list_profiles');
     }
 }
