@@ -23,7 +23,7 @@ class InviteController extends Controller
     public function __construct()
     {
         $this->middleware('auth:api')->only('sendInvite');
-        $this->middleware('signed')->only('acceptInvite');
+        // $this->middleware('signed')->only('acceptInvite');
         $this->middleware('throttle:6,1')->only('acceptInvite');
         $this->middleware('verified')->only('sendInvite');
     }
@@ -79,21 +79,11 @@ class InviteController extends Controller
      * @return  Json and Redirect to React App
      */
     public function acceptInvite(Request $request)
-    {   
-        $invite = UserInvite::where('token', $request->token)->first();
-        if (!$invite) {
-            return response()->json([
-                'ok' => false,
-                'error' => Error::INVALID_TOKEN
-            ], 400);
-        }
-
-        $username = Str::before($invite->email, '@');
-        $request->merge(['email' => $invite->email]);
-
-         // Validating user details
-         $validator = Validator::make($request->all(), [
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:q2_users']
+    {  
+        // Validating user inputs
+        $validator = Validator::make($request->all(), [   
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'token' => ['required']
         ]);
 
         if ($validator->fails()) {            
@@ -104,17 +94,27 @@ class InviteController extends Controller
             ], 400);
         }  
 
+        $invite = UserInvite::where('token', $request->token)->first();
+        if (!$invite) {
+            return response()->json([
+                'ok' => false,
+                'error' => Error::INVALID_TOKEN
+            ], 400);
+        }
+
+        $username = Str::before($invite->email, '@');
+
         $inviter = User::find($invite->inviter_id);
            
         $user = new User;
-        $user->name = $username;
+        $user->name = ucwords($username);
         $user->email = $invite->email;
         $user->account_id =  $inviter->account_id;
-        //change this to random string and send email with password for user
-        $user->password =  bcrypt('password');
+        $user->password =  bcrypt($request->password);
+        $user->created_by =  $inviter->id;
         $user->save();
 
-        //update invite status
+        // Update invite status
         $invite->status = 1;
         $invite->save();
 
@@ -122,36 +122,5 @@ class InviteController extends Controller
             'ok' => true,
             'user' => $user
         ], 200);
-    }
-
-    /**
-     * Resending Invite email to user
-     * @return Json
-     */
-    public function resendInvite(Request $request)
-    {   
-
-        $token = str_random(48);
-        $invite = UserInvite::where('email', $request->email)
-            ->where('status',1)
-            ->first();
-
-        if($invite) {
-            $invite->token = $token;
-            $invite->save();
-            //resend Mail
-            Mail::to($request->get('email'))->send(new SendInvite($invite));
-            return response()->json([
-                'status' => 'ok',
-                'invite'=> $invite
-            ]);
-        }else{
-            return response()->json([
-                'ok' => false,
-                'error' => 'user_not_found'
-            ], 500);
-        }
-        
-
     }
 }

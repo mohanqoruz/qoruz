@@ -51,7 +51,7 @@ Route::namespace('Api')->group(function () {
     Route::post('reset.password', 'ResetPasswordController@reset')->name('reset.password');
 
     // Change Passowrd
-    //Route::post('change.password', 'UserProfileController@changePassword');
+    Route::post('change.password', 'UserProfileController@changePassword');
 
     // User Profile
     Route::post('users.profile.update', 'UserProfileController@updateProfile');
@@ -77,7 +77,6 @@ Route::namespace('User')->group(function () {
     // User invites
     Route::post('send.invite', 'InviteController@sendInvite');
     Route::get('accept.invite', 'InviteController@acceptInvite')->name('accept.invite');
-    Route::post('resend.invite','InviteController@resendInvite');
 
     // User plans
     Route::get('users.plans', 'PlanController@getUserDetails');
@@ -94,7 +93,7 @@ Route::namespace('User')->group(function () {
  * -------------------------------------------------------------
  * Account Details routes
  * -------------------------------------------------------------
- * @location App\Controllers\AccountController
+ * @location App\Controllers\Account\AccountController
  */
 Route::namespace('Account')->group(function () {
 
@@ -113,4 +112,14 @@ Route::namespace('Account')->group(function () {
 
 });
 
+
+/**
+ * -------------------------------------------------------------
+ * Profiles Details routes
+ * -------------------------------------------------------------
+ * @location App\Controllers\Profile\ProfileDetailsController
+ */
+Route::namespace('Profile')->group(function () {
+   //
+});
 

@@ -29,7 +29,7 @@ class Sharable extends Model
      * @var array
      */
     protected $hidden = [
-       
+       'token'
     ];
 
     /**
