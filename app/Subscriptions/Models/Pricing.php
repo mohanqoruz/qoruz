@@ -18,7 +18,7 @@ class Pricing extends Model
      *
      * @var string
      */
-    protected $table = 'q2_pricing';
+    protected $table = 'q2_pricings';
 
     /**
      * The attributes that are mass assignable.

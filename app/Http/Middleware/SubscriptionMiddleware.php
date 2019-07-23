@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use App\Constants\Error;
+use ErrorType;
 
 class SubscriptionMiddleware
 {
@@ -21,36 +21,36 @@ class SubscriptionMiddleware
         if (! $account->isSubscriptionActive()) {
             return response()->json([
                 'ok' => false,
-                'error' => Error::SUBSCRIPTION_ENDED
+                'error' => ErrorType::SUBSCRIPTION_ENDED
             ]);
         }
 
         if ($feature == 'profile_view') {
             return response()->json([
                 'ok' => false,
-                'error' => Error::SUBSCRIPTION_ENDED
+                'error' => ErrorType::SUBSCRIPTION_ENDED
             ]);
         }
 
         if ($feature == 'create_report') {
             return response()->json([
                 'ok' => false,
-                'error' => Error::SUBSCRIPTION_ENDED
+                'error' => ErrorType::SUBSCRIPTION_ENDED
             ]);
         }
 
         if ($feature == 'referesh_report') {
             return response()->json([
                 'ok' => false,
-                'error' => Error::SUBSCRIPTION_ENDED
+                'error' => ErrorType::SUBSCRIPTION_ENDED
             ]);
         }
 
         if ($feature == 'create_plan') {
-            if (!$account->canCreatePlan()) {
+            if (! $account->canCreatePlan()) {
                 return response()->json([
                     'ok' => false,
-                    'error' => Error::PLAN_LIMIT_EXCEEDED
+                    'error' => ErrorType::PLAN_LIMIT_EXCEEDED
                 ]);
             }
         }
@@ -58,14 +58,14 @@ class SubscriptionMiddleware
         if ($feature == 'create_user') {
             return response()->json([
                 'ok' => false,
-                'error' => Error::SUBSCRIPTION_ENDED
+                'error' => ErrorType::SUBSCRIPTION_ENDED
             ]);
         }
 
         if ($feature == 'use_brand') {
             return response()->json([
                 'ok' => false,
-                'error' => Error::SUBSCRIPTION_ENDED
+                'error' => ErrorType::SUBSCRIPTION_ENDED
             ]);
         }
 

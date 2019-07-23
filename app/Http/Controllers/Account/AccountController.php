@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Account;
 
-use App\Constants\Error;
+use ErrorType;
 use Illuminate\Http\Request;
 use App\Users\Models\User as User;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Accounts\Models\Account as Account;
-use App\Http\Controllers\Controller;
 
 
 class AccountController extends Controller
@@ -47,13 +47,13 @@ class AccountController extends Controller
 
         // Validating user inputs
         $validator = Validator::make($request->all(), [
-            'pricing_name' => ['required', 'string']
+            'pricing_name' => ['required', 'string', 'exists:q2_pricings,slug']
         ]);
 
         if ($validator->fails()) {            
             return response()->json([
                 'ok' => false,
-                'error' => Error::VALIDATION_FAILED,
+                'error' => ErrorType::VALIDATION_FAILED,
                 'validation_errors' => $validator->errors()
             ], 400);
         }  
@@ -76,13 +76,13 @@ class AccountController extends Controller
 
          // Validating user inputs
          $validator = Validator::make($request->all(), [
-            'addons_name' => ['required', 'string']
+            'addons_name' => ['required', 'string', 'exists:q2_addons,slug']
         ]);
 
         if ($validator->fails()) {            
             return response()->json([
                 'ok' => false,
-                'error' => Error::VALIDATION_FAILED,
+                'error' => ErrorType::VALIDATION_FAILED,
                 'validation_errors' => $validator->errors()
             ], 400);
         }  

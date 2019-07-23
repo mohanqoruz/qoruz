@@ -5,7 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Sharables\Models\Sharable;
 use App\Plans\Models\Plan;
 use App\Users\Models\User;
-use App\Constants\Error;
+use ErrorType;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -40,7 +40,7 @@ class SharableController extends Controller
         if ($validator->fails()) {            
             return response()->json([
                 'ok' => false,
-                'error' => Error::VALIDATION_FAILED,
+                'error' => ErrorType::VALIDATION_FAILED,
                 'validation_errors' => $validator->errors()
             ], 401);
         }

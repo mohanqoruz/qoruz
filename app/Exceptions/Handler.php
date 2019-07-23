@@ -2,7 +2,7 @@
 
 namespace App\Exceptions;
 
-use App\Constants\Error;
+use ErrorType;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -56,7 +56,7 @@ class Handler extends ExceptionHandler
          {             
              return response()->json([
                 'ok' => false,
-                'error'=> Error::NO_PERMISSION
+                'error'=> ErrorType::NO_PERMISSION
             ], 403);
          }
  
@@ -66,7 +66,7 @@ class Handler extends ExceptionHandler
              if ($request->expectsJson()) {
                  return response()->json([
                      'ok' => false,
-                     'error'=> Error::NOT_AUTHED
+                     'error'=> ErrorType::NOT_AUTHED
                  ], 401);
              }
          }
@@ -76,7 +76,7 @@ class Handler extends ExceptionHandler
             if ($request->expectsJson()) {
                 return response()->json([
                     'ok' => false,
-                    'error'=> Error::INVALID_TOKEN
+                    'error'=> ErrorType::INVALID_TOKEN
                 ], 404);
             }
          }
@@ -86,7 +86,7 @@ class Handler extends ExceptionHandler
             if ($request->expectsJson()) {
                 return response()->json([
                     'ok' => false,
-                    'error'=> Error::TOO_MANY_ATTEMPTS
+                    'error'=> ErrorType::TOO_MANY_ATTEMPTS
                 ], 429);
             }
          }

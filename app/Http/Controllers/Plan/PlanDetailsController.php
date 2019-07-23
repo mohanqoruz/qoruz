@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Plan;
 
-use App\Constants\Error;
+use ErrorType;
 use Illuminate\Http\Request;
+use BenSampo\Enum\Rules\EnumValue;
+use App\Enums\PlanOptimizer;
 
 use App\Plans\Models\Plan as Plan;
 use App\Http\Controllers\Controller;
@@ -37,17 +39,17 @@ class PlanDetailsController extends Controller
          // Validating user inputs
          $validator = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:255'],
-            'brand_id' => 'required',
-            'type' => 'required',
-            'platforms' => 'required',
-            'plan_optimizer' => 'required|string',
-            'optimizer_value' => 'required|integer'
+            'brand_id' => ['required'],
+            'type' => ['required'],
+            'platforms' => ['required'],
+            'plan_optimizer' => ['required', new EnumValue(PlanOptimizer::class)],
+            'optimizer_value' => ['required','integer']
         ]);
         
         if ($validator->fails()) {            
             return response()->json([
                 'ok' => false,
-                'error' => Error::VALIDATION_FAILED,
+                'error' => ErrorType::VALIDATION_FAILED,
                 'validation_errors' => $validator->errors()
             ], 404);
         }

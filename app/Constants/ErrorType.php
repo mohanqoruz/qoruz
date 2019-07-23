@@ -4,7 +4,7 @@ namespace App\Constants;
 
 use Illuminate\Support\Facades\Facade;
 
-class Error  extends Facade {
+class ErrorType  extends Facade {
 
     /**
      * Constant representing an validation failed.
@@ -104,6 +104,6 @@ class Error  extends Facade {
      */
     protected static function getFacadeAccessor()
     {
-        return 'error';
+        return 'ErrorType';
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateQ2PricingTable extends Migration
+class CreateQ2PricingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateQ2PricingTable extends Migration
      */
     public function up()
     {
-        Schema::create('q2_pricing', function (Blueprint $table) {
+        Schema::create('q2_pricings', function (Blueprint $table) {
             $table->bigIncrements('id');
 
             $table->string('name');

@@ -2,15 +2,19 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Users\Models\User as User;
-use App\Accounts\Models\Account as Account;
+use ErrorType;
 use Carbon\Carbon;
-use App\Constants\Error;
-
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Auth;
+use App\Enums\AccountType;
+use App\Enums\AccountStatus;
+use App\Enums\Gender;
 use Illuminate\Http\Request;
+use App\Users\Models\User as User;
+use BenSampo\Enum\Rules\EnumValue;
+
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use App\Accounts\Models\Account as Account;
 
 
 class AuthController extends Controller
@@ -40,24 +44,24 @@ class AuthController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:q2_users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'phone' => ['required', 'string', 'unique:q2_users', 'min:10'],
-            'gender' => ['required', 'string'],
-            'account_type' => 'required|string',
-            'account_name' => 'required|string'
+            'gender' => ['required', new EnumValue(Gender::class)],
+            'account_type' => ['required', new EnumValue(AccountType::class)],
+            'account_name' => ['required', 'string']
         ]);
 
         if ($validator->fails()) {            
             return response()->json([
                 'ok' => false,
-                'error' => Error::VALIDATION_FAILED,
+                'error' => ErrorType::VALIDATION_FAILED,
                 'validation_errors' => $validator->errors()
-            ], 400);
+            ], 401);
         }  
 
         // Creating account
         $account = new Account;
         $account->name = $request->account_name;
         $account->type = $request->account_type;
-        $account->status = 'trialing';
+        $account->status = AccountStatus::Trialing;
         $account->save();
  
         // Creating user
@@ -98,7 +102,6 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-
         // Validating user inputs
         $validator = Validator::make($request->all(), [
             'email' => ['required', 'string', 'email'],
@@ -108,7 +111,7 @@ class AuthController extends Controller
         if ($validator->fails()) {            
             return response()->json([
                 'ok' => false,
-                'error' => Error::VALIDATION_FAILED,
+                'error' => ErrorType::VALIDATION_FAILED,
                 'validation_errors' => $validator->errors()
             ], 401);
         }  
@@ -130,7 +133,7 @@ class AuthController extends Controller
         } else {
             return response()->json([
                 'ok' => false,
-                'error' => Error::WRONG_CREDENTIALS
+                'error' => ErrorType::WRONG_CREDENTIALS
             ], 401);
         }
     }

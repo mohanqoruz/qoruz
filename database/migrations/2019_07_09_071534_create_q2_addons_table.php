@@ -18,7 +18,7 @@ class CreateQ2AddonsTable extends Migration
 
             $table->string('name');
             $table->string('slug')->unique();
-            $table->enum('type', ['plans', 'brands', 'users','reports','profiles']);
+            $table->string('type');
             $table->unsignedInteger('limit');
 
             $table->timestamps();

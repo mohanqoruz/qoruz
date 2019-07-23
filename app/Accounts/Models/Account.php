@@ -2,15 +2,13 @@
 
 namespace App\Accounts\Models;
 
-use App\Subscriptions\Traits\Subscribable as Subscribable;
-use App\Subscriptions\Traits\Priceable as Priceable;
-use Chelout\RelationshipEvents\Concerns\HasBelongsToManyEvents;
-
 use Illuminate\Database\Eloquent\Model;
+use App\Subscriptions\Traits\Priceable as Priceable;
+use App\Subscriptions\Traits\Subscribable as Subscribable;
+use Chelout\RelationshipEvents\Concerns\HasBelongsToManyEvents;
 
 class Account extends Model
 {   
-
     use Subscribable, Priceable, HasBelongsToManyEvents;
 
     /**
@@ -64,8 +62,7 @@ class Account extends Model
     public function users()
     {
         return $this->hasMany('App\Users\Models\User');
-    }
-    
+    }    
 
     /**
      * Account pricing pivot relation event observer

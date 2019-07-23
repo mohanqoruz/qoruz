@@ -3,7 +3,7 @@
 namespace App\Plans\Traits;
 
 use Illuminate\Support\Str;
-
+use App\Enums\PlanStatus;
 use App\Sharables\Models\Sharable;
 use App\Plans\Models\Plan;
 
@@ -62,7 +62,7 @@ trait Plannable {
         $plan->platforms = $plan_detail->platforms;
         $plan->plan_optimizer = $plan_detail->plan_optimizer;
         $plan->optimizer_value = $plan_detail->optimizer_value;
-        $plan->status = 'active';
+        $plan->status = PlanStatus::Active;
         $plan->save();
         
         $slug = Str::slug($plan->name, '-');

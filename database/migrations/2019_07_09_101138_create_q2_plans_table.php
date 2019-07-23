@@ -26,9 +26,9 @@ class CreateQ2PlansTable extends Migration
 
             $table->bigInteger('type');
             $table->jsonb('platforms');
-            $table->enum('plan_optimizer', ['budget', 'video_views', 'reach']);
+            $table->string('plan_optimizer');
             $table->bigInteger('optimizer_value');
-            $table->enum('status', ['active', 'inactive', 'suspended']);    
+            $table->string('status');    
 
             $table->timestamps();
             $table->softDeletes();
