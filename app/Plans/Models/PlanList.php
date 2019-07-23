@@ -3,11 +3,12 @@
 namespace App\Plans\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Profiles\Traits\Profileable;
 
-class Lists extends Model
+class PlanList extends Model
 {
-     use IsSharable;
-
+    use Profileable;
+    
     /**
      * The table associated with the model.
      *
@@ -21,7 +22,7 @@ class Lists extends Model
      * @var array
      */
     protected $fillable = [
-        
+        'name','label_color','plan_id'
     ];
 
     /**

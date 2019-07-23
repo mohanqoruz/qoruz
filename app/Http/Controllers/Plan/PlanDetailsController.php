@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Plan;
 
 use App\Constants\Error;
 use Illuminate\Http\Request;
