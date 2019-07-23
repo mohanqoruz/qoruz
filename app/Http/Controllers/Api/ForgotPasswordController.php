@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Constants\Error;
+use ErrorType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use App\Http\Controllers\Controller;
@@ -40,7 +40,7 @@ class ForgotPasswordController extends Controller
         if ($validator->fails()) {            
             return response()->json([
                 'ok' => false,
-                'error' => Error::VALIDATION_FAILED,
+                'error' => ErrorType::VALIDATION_FAILED,
                 'validation_errors' => $validator->errors()
             ], 400);
         }  
@@ -80,7 +80,7 @@ class ForgotPasswordController extends Controller
     {
         return response()->json([
             'ok' => false,
-            'error' => Error::USER_NOT_FOUND,
+            'error' => ErrorType::USER_NOT_FOUND,
             // 'validation_errors' => ['email' => [trans($response)]]
         ], 200);
     }

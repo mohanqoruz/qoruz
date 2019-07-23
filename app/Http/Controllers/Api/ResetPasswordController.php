@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Constants\Error;
+use ErrorType;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
@@ -38,7 +38,7 @@ class ResetPasswordController extends Controller
         if ($validator->fails()) {            
             return response()->json([
                 'ok' => false,
-                'error' => Error::VALIDATION_FAILED,
+                'error' => ErrorType::VALIDATION_FAILED,
                 'validation_errors' => $validator->errors()
             ], 400);
         }  
@@ -82,7 +82,7 @@ class ResetPasswordController extends Controller
     {
         return response()->json([
             'ok' => false,
-            'error' => Error::INVALID_TOKEN
+            'error' => ErrorType::INVALID_TOKEN
         ], 200);
     }
 

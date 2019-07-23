@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use Intervention\Image\ImageManager;
 use App\Users\Models\User; 
-use App\Constants\Error;
+use ErrorType;
 
 use Storage;
 use Illuminate\Support\Str;
@@ -37,7 +37,7 @@ class UserProfileController extends Controller
         if ($validator->fails()) {            
             return response()->json([
                 'ok' => false,
-                'error' => Error::VALIDATION_FAILED,
+                'error' => ErrorType::VALIDATION_FAILED,
                 'validation_errors' => $validator->errors()
             ], 401);
         }  
@@ -60,7 +60,7 @@ class UserProfileController extends Controller
         } else {
             return response()->json([
                 'ok' => false,
-                'error' => Error::OLD_PASSWORD_WRONG
+                'error' => ErrorType::OLD_PASSWORD_WRONG
             ], 401);
         }
 
@@ -84,7 +84,7 @@ class UserProfileController extends Controller
         if ($validator->fails()) {            
             return response()->json([
                 'ok' => false,
-                'error' => Error::VALIDATION_FAILED,
+                'error' => ErrorType::VALIDATION_FAILED,
                 'validation_errors' => $validator->errors()
             ], 401);
         }  
@@ -116,7 +116,7 @@ class UserProfileController extends Controller
         if ($validator->fails()) {            
             return response()->json([
                 'ok' => false,
-                'error' => Error::VALIDATION_FAILED,
+                'error' => ErrorType::VALIDATION_FAILED,
                 'validation_errors' => $validator->errors()
             ], 400);
         }

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Mail\SendInvite;
 use App\Users\Models\UserInvite; 
 use App\Users\Models\User; 
-use App\Constants\Error;
+use ErrorType;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -44,7 +44,7 @@ class InviteController extends Controller
         if ($validator->fails()) {            
             return response()->json([
                 'ok' => false,
-                'error' => Error::VALIDATION_FAILED,
+                'error' => ErrorType::VALIDATION_FAILED,
                 'validation_errors' => $validator->errors()
             ], 400);
         }  
@@ -89,7 +89,7 @@ class InviteController extends Controller
         if ($validator->fails()) {            
             return response()->json([
                 'ok' => false,
-                'error' =>Error::VALIDATION_FAILED,
+                'error' =>ErrorType::VALIDATION_FAILED,
                 'validation_errors' => $validator->errors()
             ], 400);
         }  
@@ -98,7 +98,7 @@ class InviteController extends Controller
         if (!$invite) {
             return response()->json([
                 'ok' => false,
-                'error' => Error::INVALID_TOKEN
+                'error' => ErrorType::INVALID_TOKEN
             ], 400);
         }
 

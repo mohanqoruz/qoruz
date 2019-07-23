@@ -16,8 +16,8 @@ class CreateQ2AccountsTable extends Migration
         Schema::create('q2_accounts', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->enum('type', ['brand', 'agency', 'api', 'whitelabel', 'startup']);
-            $table->enum('status', ['trialing', 'active', 'suspended', 'deleted']);
+            $table->string('type');
+            $table->string('status');
             $table->timestamps();
             $table->softDeletes();
         });

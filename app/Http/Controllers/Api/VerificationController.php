@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Constants\Error;
+use ErrorType;
 use App\Users\Models\User;
 
 use Illuminate\Http\Request;
@@ -49,7 +49,7 @@ class VerificationController extends Controller
         if ($validator->fails()) {            
             return response()->json([
                 'ok' => false,
-                'error' => Error::VALIDATION_FAILED,
+                'error' => ErrorType::VALIDATION_FAILED,
                 'validation_errors' => $validator->errors()
             ], 400);
         }  
@@ -58,7 +58,7 @@ class VerificationController extends Controller
         if (! $user) {
             return response()->json([
                 'ok' => false,
-                'error' => Error::INVALID_TOKEN
+                'error' => ErrorType::INVALID_TOKEN
             ], 400);
         }
 
@@ -66,7 +66,7 @@ class VerificationController extends Controller
             return response()->json([
                 'ok' => false,
                 'stuff' => 'User already have verified email!',
-                'error' => Error::ALREADY_VERIFIED
+                'error' => ErrorType::ALREADY_VERIFIED
             ], 422);
         }
 
@@ -92,7 +92,7 @@ class VerificationController extends Controller
             return response()->json([
                 'ok' => false,
                 'stuff' => 'User already have verified email!',
-                'error' => Error::ALREADY_VERIFIED
+                'error' => ErrorType::ALREADY_VERIFIED
             ], 422);
         }
 
