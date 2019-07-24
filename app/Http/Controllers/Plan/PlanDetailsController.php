@@ -23,7 +23,7 @@ class PlanDetailsController extends Controller
     public function __construct()
     {
         $this->middleware('auth:api');
-        $this->middleware('subscription:create_plan')->only('create');
+        //$this->middleware('subscription:create_plan')->only('create');
     }
 
     /**
@@ -64,5 +64,7 @@ class PlanDetailsController extends Controller
             ], 200);
         }
     }
+
+   
 
 }

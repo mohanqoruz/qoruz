@@ -3,11 +3,11 @@
 namespace App\Plans\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Profiles\Traits\Profileable;
+use App\Plans\Traits\Listable;
 
 class PlanList extends Model
 {
-    use Profileable;
+    use Listable;
     
     /**
      * The table associated with the model.
@@ -22,7 +22,7 @@ class PlanList extends Model
      * @var array
      */
     protected $fillable = [
-        'name'
+        'name', 'label_color','owner_id'
     ];
 
     /**
@@ -32,19 +32,5 @@ class PlanList extends Model
      */
     protected $hidden = [
        
-    ];
-
-    
-    public function getLabelColorAttribute($value)
-    {
-        $color = $value;
-
-        if ($value == '') {
-            $color = '#' . dechex(mt_rant(0, 16777215));
-        }
-
-        return $color;
-    }
-
-   
+    ];   
 }

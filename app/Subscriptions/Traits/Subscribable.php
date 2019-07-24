@@ -35,15 +35,21 @@ trait Subscribable {
      */
      public function isSubscriptionActive() : bool
      {
-        $end_at = $this->subscription->ends_at;
-        $now = Carbon::now();
+        $status = false;
 
-        if (! $end_at->greaterThanOrEqualTo($now)) {
-           $this->status = false;
-           $this->save();
+        if ($this->subscription != '') {
+           $end_at = $this->subscription->ends_at;
+           $now = Carbon::now();
+   
+           if (! $end_at->greaterThanOrEqualTo($now)) {
+              $this->status = false;
+              $this->save();
+           }
+
+           $status = $this->subscription->status;
         }
 
-        return ($this->subscription->status) ? true : false;
+        return $status;
      }
 
      /**

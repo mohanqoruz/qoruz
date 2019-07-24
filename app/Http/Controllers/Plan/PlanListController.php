@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Rules\CheckProfile;
 
 use App\Plans\Models\PlanList as PlanList;
+use App\Plans\Models\Plan as Plan;
 use App\Plans\Models\ListProfiles as ListProfiles;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -26,17 +27,16 @@ class PlanListController extends Controller
         $this->middleware('verified');
     }
 
+
     /**
-     * Create List 
-     * @return Array List $list 
+     * List of Plans
+     * @return Array $lists
      */
-    public function create(Request $request)
-    {
-       // Validating user inputs
+    public function planLists(Request $request)
+    {      
+        // Validating user inputs
        $validator = Validator::make($request->all(), [
-        'name' => ['required', 'string', 'max:255'],
-        'label_color' => ['required', 'string'],
-        'plan_id' => ['required','integer']
+        'plan_id' => ['required', 'exists:q2_plans,id']
        ]);
     
         if ($validator->fails()) {            
@@ -47,16 +47,37 @@ class PlanListController extends Controller
             ], 401);
         }
 
-        $planlist = new PlanList;
-        $planlist->name = $request->name;
-        $planlist->label_color = $request->label_color;
-        $planlist->plan_id = $request->plan_id;  
-        $planlist->owner_id = $request->user()->id;    
-        $planlist->save();
-
+        $lists = PlanList::where('plan_id',$request->plan_id)->get();
         return response()->json([
             'ok' => true,
-            'planlist' => $planlist
+            'lists' => $lists
+        ], 200);
+    }
+    
+    /**
+     * Create List 
+     * @return Array List $list 
+     */
+    public function createList(Request $request)
+    {
+       // Validating user inputs
+       $validator = Validator::make($request->all(), [
+        'plan_id' => ['required', 'exists:q2_plans,id']
+       ]);
+    
+        if ($validator->fails()) {            
+            return response()->json([
+                'ok' => false,
+                'error' => ErrorType::VALIDATION_FAILED,
+                'validation_errors' => $validator->errors()
+            ], 401);
+        }
+         
+        $plan = Plan::find($request->plan_id);
+        $list = $plan->createList($request->user());
+        return response()->json([
+            'ok' => true,
+            'list' => $list
         ], 200);
         
 
@@ -64,16 +85,13 @@ class PlanListController extends Controller
 
     /**
      * Update List 
-     * @return bool
+     * @return Bool 
      */
-    public function update(Request $request)
+    public function updateList(Request $request)
     {
         // Validating user inputs
        $validator = Validator::make($request->all(), [
         'list_id'   => 'required',
-        'name' => ['required', 'string', 'max:255'],
-        'label_color' => ['required','max:10'],
-        'plan_id' => 'required|integer',
        ]);
     
         if ($validator->fails()) {            
@@ -84,15 +102,17 @@ class PlanListController extends Controller
             ], 401);
         }
 
-        $planlist = PlanList::find($request->list_id);
-        $planlist->name = $request->name;
-        $planlist->label_color = $request->label_color;
-        $planlist->plan_id = $request->plan_id;  
-        $planlist->save();
+        $list = PlanList::find($request->list_id);
+        if ($request->has('name')) {
+            $list->name = $request->name;
+        }
+        if ($request->has('label_color')) {
+            $list->label_color = $request->label_color;
+        }
+        $updatedList = $list->save();
 
         return response()->json([
             'ok' => true,
-            'planlist' => $planlist
         ], 200);
     }
 
