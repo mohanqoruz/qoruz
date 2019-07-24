@@ -33,7 +33,7 @@ class PlanDetailsController extends Controller
      */
 
     public function create(Request $request)
-    {
+    {    
          $this->authorize('plans.create', User::class);
          
          // Validating user inputs

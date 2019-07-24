@@ -118,10 +118,11 @@ Route::namespace('Account')->group(function () {
  */
 Route::namespace('Plan')->group(function () {
 
-    Route::post('list.create', 'PlanListController@create'); 
-    Route::post('list.update', 'PlanListController@update'); 
-    Route::post('list.addprofile', 'PlanListController@addProfiles'); 
-    Route::post('list.deleteprofile', 'PlanListController@deleteProfile'); 
+    Route::post('plans.create', 'PlanDetailsController@create');
+    Route::post('lists.create', 'PlanListController@create'); 
+    Route::post('lists.update', 'PlanListController@update'); 
+    Route::post('lists.addprofile', 'PlanListController@addProfiles'); 
+    Route::post('lists.removeprofile', 'PlanListController@removeProfile'); 
 
 });
 

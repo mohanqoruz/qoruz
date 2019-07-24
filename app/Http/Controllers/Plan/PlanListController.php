@@ -28,14 +28,14 @@ class PlanListController extends Controller
 
     /**
      * Create List 
-     * @return Array $list 
+     * @return Array List $list 
      */
     public function create(Request $request)
     {
        // Validating user inputs
        $validator = Validator::make($request->all(), [
         'name' => ['required', 'string', 'max:255'],
-        'label_color' => ['required','max:7'],
+        'label_color' => ['required','max:7','integer'],
         'plan_id' => ['required','integer']
        ]);
     
@@ -98,7 +98,7 @@ class PlanListController extends Controller
 
     /**
      * Add profiles to List
-     * @return bool
+     * @return List $list
      */
     public function addProfiles(Request $request)
     {      
@@ -122,8 +122,11 @@ class PlanListController extends Controller
         
         $list = PlanList::find($request->list_id);
         $list_result = $list->addProfile($request->profiles);
-        
-        return $list_result;
+
+        return response()->json([
+            'ok' => true,
+            'planlist' => $list_result
+        ], 200);
 
     }
 
@@ -131,7 +134,7 @@ class PlanListController extends Controller
      * Remove Profiles
      * @return bool
      */
-    public function deleteprofile(Request $request)
+    public function removeProfile(Request $request)
     {   
         // Validating user inputs
         $validator = Validator::make($request->all(), [
@@ -150,7 +153,10 @@ class PlanListController extends Controller
         $list = PlanList::find($request->list_id);
         $list_result = $list->removeProfiles($request->profiles);
 
-        return $list_result;
+         return response()->json([
+            'ok' => true,
+            'planlist' => $list_result
+        ], 200);
         
     }
 }
