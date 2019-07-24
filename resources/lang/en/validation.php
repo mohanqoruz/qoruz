@@ -129,8 +129,8 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'profileIds' => [
+            'exists' => 'Profile Ids required!',
         ],
     ],
 

@@ -101,17 +101,17 @@ class PlanListController extends Controller
      * @return bool
      */
     public function addProfiles(Request $request)
-    {   
+    {      
         $profileIds[] = $request->profiles;
         $request->merge(['profileIds' => $profileIds]);
 
-        // Validating user inputs
+       // Validating user inputs
         $validator = Validator::make($request->all(), [
             'list_id'   => 'required',
             'profiles' => 'required',
-            'profileIds.*' => 'exists:profiles,id'
+            'profileIds.*' => 'exists:profiles,id'           
         ]);
-    
+        
         if ($validator->fails()) {            
             return response()->json([
                 'ok' => false,
@@ -119,10 +119,10 @@ class PlanListController extends Controller
                 'validation_errors' => $validator->errors()
             ], 401);
         }
-
+        
         $list = PlanList::find($request->list_id);
         $list_result = $list->addProfile($request->profiles);
-
+        
         return $list_result;
 
     }
