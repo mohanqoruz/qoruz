@@ -22,7 +22,7 @@ class PlanList extends Model
      * @var array
      */
     protected $fillable = [
-        'name','label_color','plan_id'
+        'name'
     ];
 
     /**
@@ -33,6 +33,18 @@ class PlanList extends Model
     protected $hidden = [
        
     ];
+
+    
+    public function getLabelColorAttribute($value)
+    {
+        $color = $value;
+
+        if ($value == '') {
+            $color = '#' . dechex(mt_rant(0, 16777215));
+        }
+
+        return $color;
+    }
 
    
 }

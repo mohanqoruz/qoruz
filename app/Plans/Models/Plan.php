@@ -5,10 +5,11 @@ namespace App\Plans\Models;
 use App\Sharables\Models\Sharable as Sharable;
 use Illuminate\Database\Eloquent\Model;
 use App\Sharables\Traits\IsSharable;
+use App\Plans\Traits\Listable;
 
 class Plan extends Model
 {
-     use IsSharable;
+     use IsSharable, Listable;
 
     /**
      * The table associated with the model.
