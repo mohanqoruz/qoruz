@@ -35,7 +35,7 @@ class PlanListController extends Controller
        // Validating user inputs
        $validator = Validator::make($request->all(), [
         'name' => ['required', 'string', 'max:255'],
-        'label_color' => ['required','max:7'],
+        'label_color' => ['required', 'string'],
         'plan_id' => ['required','integer']
        ]);
     

@@ -51,6 +51,6 @@ class CreateQ2PricingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('q2_pricing');
+        Schema::dropIfExists('q2_pricings');
     }
 }
