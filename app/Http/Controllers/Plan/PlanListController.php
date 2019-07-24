@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Plan;
 
-use App\Constants\Error;
+use ErrorType;
 use Illuminate\Http\Request;
 
 use App\Rules\CheckProfile;
@@ -42,7 +42,7 @@ class PlanListController extends Controller
         if ($validator->fails()) {            
             return response()->json([
                 'ok' => false,
-                'error' => Error::VALIDATION_FAILED,
+                'error' => ErrorType::VALIDATION_FAILED,
                 'validation_errors' => $validator->errors()
             ], 401);
         }
@@ -79,7 +79,7 @@ class PlanListController extends Controller
         if ($validator->fails()) {            
             return response()->json([
                 'ok' => false,
-                'error' => Error::VALIDATION_FAILED,
+                'error' => ErrorType::VALIDATION_FAILED,
                 'validation_errors' => $validator->errors()
             ], 401);
         }
@@ -115,7 +115,7 @@ class PlanListController extends Controller
         if ($validator->fails()) {            
             return response()->json([
                 'ok' => false,
-                'error' => Error::VALIDATION_FAILED,
+                'error' => ErrorType::VALIDATION_FAILED,
                 'validation_errors' => $validator->errors()
             ], 401);
         }
@@ -142,7 +142,7 @@ class PlanListController extends Controller
         if ($validator->fails()) {            
             return response()->json([
                 'ok' => false,
-                'error' => Error::VALIDATION_FAILED,
+                'error' => ErrorType::VALIDATION_FAILED,
                 'validation_errors' => $validator->errors()
             ], 401);
         }
