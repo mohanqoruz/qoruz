@@ -43,4 +43,12 @@ trait Platformable {
     {
         return $this->hasOne('App\Profiles\Models\Blog');
     }
+
+    /**
+     * Get the profile by handle
+     */
+    public static function findHandle($handle)
+    {
+        return static::where('handle', $handle)->first();
+    }
 }
