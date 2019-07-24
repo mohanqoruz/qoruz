@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Plan;
 
 use ErrorType;
 use Illuminate\Http\Request;
@@ -12,7 +12,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Sharables\Models\Sharable as Sharable;
 
-class PlanController extends Controller
+class PlanDetailsController extends Controller
 {
    
     /**
@@ -24,18 +24,6 @@ class PlanController extends Controller
     {
         $this->middleware('auth:api');
         $this->middleware('subscription:create_plan')->only('create');
-    }
-
-    /**
-     * Get all plans for user
-     * @return Plan $plans
-     */
-    public function getUserDetails(Request $request)
-    {
-        return response()->json([
-            'ok' => true,
-            'plans' => $request->user()->plans
-        ], 200);
     }
 
     /**
@@ -77,6 +65,4 @@ class PlanController extends Controller
         }
     }
 
-  
-    
 }

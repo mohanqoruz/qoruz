@@ -1,21 +1,18 @@
 <?php
 
-namespace App\Profiles\Models;
+namespace App\Plans\Models;
 
-
-use App\Profiles\Traits\Platformable;
 use Illuminate\Database\Eloquent\Model;
 
-class Profile extends Model
+class ListProfiles extends Model
 {
-    use Platformable;
 
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'profiles';
+    protected $table = 'q2_list_profiles';
 
     /**
      * The attributes that are mass assignable.
@@ -35,12 +32,5 @@ class Profile extends Model
        
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-
-    ];
+    
 }

@@ -66,7 +66,7 @@ Route::namespace('Api')->group(function () {
  * User Details routes
  * -------------------------------------------------------------
  * @location App\Controller\User\UserDetailsController
- * @location App\Controller\User\PlanController
+ * @location App\Controller\User\PlanDetailsController
  * 
  */
 Route::namespace('User')->group(function () {
@@ -78,14 +78,12 @@ Route::namespace('User')->group(function () {
     Route::post('send.invite', 'InviteController@sendInvite');
     Route::get('accept.invite', 'InviteController@acceptInvite')->name('accept.invite');
 
-    // User plans
-    Route::get('users.plans', 'PlanController@getUserDetails');
-    Route::post('plans.create', 'PlanController@create');  
-
     //User Plans/Report Sharable
     Route::post('sharePlan','SharableController@sharePlan');
     Route::get('users.sharedwithme','UserDetailsController@sharedWithMe');
     Route::get('users.sharedby','UserDetailsController@sharedBy');
+    // User plans
+    Route::get('users.plans', 'UserDetailsController@getUserPlanDetails');
     
 });  
 
@@ -109,6 +107,21 @@ Route::namespace('Account')->group(function () {
     Route::get('accounts.subscriptions', 'AccountController@getAccountSubscriptions');
     Route::get('accounts.activeSubscription', 'AccountController@getAccountActiveSubscription');
     Route::get('accounts.users.list','AccountController@accountUsersList');
+
+});
+
+/**
+ * -------------------------------------------------------------
+ * Plan Details routes
+ * -------------------------------------------------------------
+ * @location App\Controllers\PlanDetailsController
+ */
+Route::namespace('Plan')->group(function () {
+
+    Route::post('list.create', 'PlanListController@create'); 
+    Route::post('list.update', 'PlanListController@update'); 
+    Route::post('list.addprofile', 'PlanListController@addProfiles'); 
+    Route::post('list.deleteprofile', 'PlanListController@deleteProfile'); 
 
 });
 

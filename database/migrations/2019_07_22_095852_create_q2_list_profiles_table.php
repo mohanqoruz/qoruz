@@ -16,7 +16,7 @@ class CreateQ2ListProfilesTable extends Migration
         Schema::create('q2_list_profiles', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->unsignedInteger('list_id');
+            $table->unsignedInteger('plan_list_id');
             $table->unsignedInteger('profile_id');
             $table->jsonb('facebook_delivariables')->nullable(); 
             $table->jsonb('instagram_delivariables')->nullable(); 

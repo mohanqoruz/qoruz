@@ -16,7 +16,7 @@ class CreateQ2ListsTable extends Migration
         Schema::create('q2_lists', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('label_colour');
+            $table->string('label_color');
 
             $table->unsignedInteger('plan_id');
             $table->unsignedInteger('owner_id');
