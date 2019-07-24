@@ -56,7 +56,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'is_admin' => 'boolean',
     ];
 
-     /**
+    /**
      * Get the user's  name.
      *
      * @param  string  $value

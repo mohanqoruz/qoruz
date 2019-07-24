@@ -35,7 +35,15 @@ trait Subscribable {
      */
      public function isSubscriptionActive() : bool
      {
-        return ($this->subscription->status) ? true : false ;
+        $end_at = $this->subscription->ends_at;
+        $now = Carbon::now();
+
+        if (! $end_at->greaterThanOrEqualTo($now)) {
+           $this->status = false;
+           $this->save();
+        }
+
+        return ($this->subscription->status) ? true : false;
      }
 
      /**
@@ -84,60 +92,60 @@ trait Subscribable {
       * Check SUbscription for ProfileViews
       * @return bool
       */
-      public function canViewProfile()
+      public function canViewProfile() : bool
       {
          $subscription = $this->subscription;
-         return ($subscription->profiles_count) ? true : false ;
+         return ($subscription->profiles_count) ? true : false;
       }
 
       /**
        * Check Subscription for Report Refresh
        * @return bool
        */
-      public function canReportRefresh()
+      public function canReportRefresh() : bool
       {
          $subscription = $this->subscription;
-         return ($subscription->report_refresh) ? true : false ;
+         return ($subscription->report_refresh) ? true : false;
       }
 
       /**
        * Check Subscription for creating Report
        * @return bool
        */
-      public function canCreateReport()
+      public function canCreateReport() : bool
       {
          $subscription = $this->subscription;
-         return ($subscription->reports_count) ? true : false ;
+         return ($subscription->reports_count) ? true : false;
       }
 
       /**
        * Check Subscrition for creating new plan
        * @return bool
        */
-      public function canCreatePlan()
+      public function canCreatePlan() : bool
       {
          $subscription = $this->subscription;
-         return ($subscription->plans_count) ? true : false ;
+         return ($subscription->plans_count) ? true : false;
       }
 
       /**
        * Check Subscription for creating new User
        * @return bool
        */
-      public function canCreateUser()
+      public function canCreateUser() : bool
       {
          $subscription = $this->subscription;
-         return ($subscription->users_count) ? true : false ;
+         return ($subscription->users_count) ? true : false;
       }
 
       /**
        * Check Subscription for creating new Brand
        * @return bool
        */
-      public function canUseBrand()
+      public function canUseBrand() : bool
       {
          $subscription = $this->subscription;
-         return ($subscription->brands_count) ? true : false ;
+         return ($subscription->brands_count) ? true : false;
       }
 
       /**

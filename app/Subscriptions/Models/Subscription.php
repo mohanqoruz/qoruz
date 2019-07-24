@@ -2,6 +2,7 @@
 
 namespace App\Subscriptions\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Subscription extends Model
@@ -38,6 +39,17 @@ class Subscription extends Model
      * @var array
      */
     protected $casts = [
-        'status' => 'boolean'
+        'status' => 'boolean',
     ];
+
+    /**
+     * Get the subscription's  end_date.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getEndsAtAttribute($value)
+    {
+        return Carbon::parse($value);
+    }
 }
