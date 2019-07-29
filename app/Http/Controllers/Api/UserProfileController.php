@@ -78,7 +78,7 @@ class UserProfileController extends Controller
             'name' => ['required', 'string','max:250ss'],
             'phone' => ['required', 'integer', 'min:10'],
             'gender' => 'required',
-            'profile_image' =>'required|mimes:jpeg,jpg,png,JPG,PNG|max:5120', 
+            'profile_image' =>'mimes:jpeg,jpg,png,JPG,PNG|max:5120', 
         ]);
 
         if ($validator->fails()) {            
@@ -90,6 +90,19 @@ class UserProfileController extends Controller
         }  
 
         $user = User::find($request->user()->id);
+
+        if($request->profile_image){
+            
+            $photo = $request->profile_image;
+            $slug = Str::slug($request->user()->name, '-');
+            $imagename = $request->user()->id.'_'.$slug.'.'.$photo->getClientOriginalExtension();
+
+            $image = \Image::make($photo);
+            $user->profile_image =  $imagename;
+            $picture = (string) $image->encode();
+            $s3 = Storage::disk('s3')->put(env('IMAGE_PATH') . $imagename, $picture);
+
+        }
         $user->name = $request->name;
         $user->phone = $request->phone;
         $user->gender = $request->gender;       
@@ -110,7 +123,7 @@ class UserProfileController extends Controller
     {
          // Validating user inputs
          $validator = Validator::make($request->all(), [            
-            'profile_image' =>'required|mimes:jpeg,jpg,png,JPG,PNG|max:5120', 
+            'profileimage' =>'required|mimes:jpeg,jpg,png,JPG,PNG|max:5120', 
         ]);
 
         if ($validator->fails()) {            
@@ -122,20 +135,22 @@ class UserProfileController extends Controller
         }
 
         $user = User::find($request->user()->id);
-        $photo = $request->profile_image;
+        $photo = $request->profileimage;
         $slug = Str::slug($request->user()->name, '-');
         $imagename = $request->user()->id.'_'.$slug.'.'.$photo->getClientOriginalExtension();
 
         $image = \Image::make($photo);
         $user->profile_image =  $imagename;
         $picture = (string) $image->encode();
-        $local = Storage::disk('local')->put(env('IMAGE_PATH') . $imagename, $picture);
+        // $local = Storage::disk('local')->put(env('IMAGE_PATH') . $imagename, $picture);
+        $s3 = Storage::disk('s3')->put(env('IMAGE_PATH') . $imagename, $picture);
 
         $user->save();
 
         return response()->json([
             'ok' => true,
-            'stuff' => 'Profile image updated successfully!'
+            'stuff' => 'Profile image updated successfully!',
+            'user_details' => $user
         ], 200);
 
     }
