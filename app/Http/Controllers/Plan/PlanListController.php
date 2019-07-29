@@ -85,7 +85,7 @@ class PlanListController extends Controller
 
     /**
      * Update List 
-     * @return Bool 
+     * @return List Array 
      */
     public function updateList(Request $request)
     {
@@ -113,6 +113,7 @@ class PlanListController extends Controller
 
         return response()->json([
             'ok' => true,
+            'list'=> $list
         ], 200);
     }
 
@@ -129,7 +130,8 @@ class PlanListController extends Controller
         $validator = Validator::make($request->all(), [
             'list_id'   => 'required',
             'profiles' => 'required',
-            'profileIds.*' => 'exists:profiles,id'           
+            'profileIds.*' => 'exists:profiles,id',
+            'profileIds' => [ new CheckProfile($request->list_id)],          
         ]);
         
         if ($validator->fails()) {            

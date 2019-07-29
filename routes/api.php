@@ -57,8 +57,6 @@ Route::namespace('Api')->group(function () {
     Route::post('users.profile.update', 'UserProfileController@updateProfile');
     Route::post('users.setPhoto', 'UserProfileController@setUserPhoto');
     
-    //Create User By Admin
-    Route::post('users.create', 'UserProfileController@createUser');
 });
 
 /**
