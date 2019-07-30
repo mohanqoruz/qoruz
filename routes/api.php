@@ -139,6 +139,6 @@ Route::namespace('Plan')->group(function () {
  * @location App\Controllers\Profile\ProfileDetailsController
  */
 Route::namespace('Profile')->group(function () {
-   //
+   Route::get('profiles.info', 'ProfileDetailsController@showProfile')->name('profiles.show');
 });
 

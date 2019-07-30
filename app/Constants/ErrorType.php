@@ -98,6 +98,13 @@ class ErrorType  extends Facade {
     const TOO_MANY_ATTEMPTS = 'too_many_attempts';
 
     /**
+     * Constant representing an profile does't exist
+     *
+     * @var string
+     */
+    const PROFILE_NOT_FOUND = 'profile_not_found';
+
+    /**
      * Get the registered name of the component.
      *
      * @return string

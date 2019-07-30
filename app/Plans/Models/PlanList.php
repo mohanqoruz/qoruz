@@ -3,11 +3,11 @@
 namespace App\Plans\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Profiles\Traits\Profileable;
+use App\Plans\Traits\HasProfile;
 
 class PlanList extends Model
 {
-    use Profileable;
+    use HasProfile;
     
     /**
      * The table associated with the model.

@@ -39,7 +39,7 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         // Validating user inputs
-        $validator = Validator::make($request->all(), [
+        $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:q2_users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
@@ -48,15 +48,7 @@ class AuthController extends Controller
             'account_type' => ['required', new EnumValue(AccountType::class)],
             'account_name' => ['required', 'string']
         ]);
-
-        if ($validator->fails()) {            
-            return response()->json([
-                'ok' => false,
-                'error' => ErrorType::VALIDATION_FAILED,
-                'validation_errors' => $validator->errors()
-            ], 401);
-        }  
-
+        
         // Creating account
         $account = new Account;
         $account->name = $request->account_name;
@@ -103,18 +95,10 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         // Validating user inputs
-        $validator = Validator::make($request->all(), [
+        $request->validate([
             'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string']
         ]);
-
-        if ($validator->fails()) {            
-            return response()->json([
-                'ok' => false,
-                'error' => ErrorType::VALIDATION_FAILED,
-                'validation_errors' => $validator->errors()
-            ], 401);
-        }  
 
         $credentials = [
             'email' => $request->email,
