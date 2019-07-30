@@ -2,6 +2,8 @@
 
 namespace App\Plans\Traits;
 
+use App\Plans\Models\ListProfile;
+
 trait HasProfile {
 
     /**
@@ -9,7 +11,13 @@ trait HasProfile {
      */
     public function influencers()
     {
-        return $this->belongsToMany('App\Plans\Models\Plan');
+        $class_ids = [
+            'Plan' => 'plan_id',
+            'PlanList' => 'list_id'
+        ];
+
+        $id = $class_ids[class_basename($this)];        
+        return $this->hasMany(ListProfile::class, $id);
     }
 
     /**

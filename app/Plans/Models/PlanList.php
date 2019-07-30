@@ -58,8 +58,7 @@ class PlanList extends Model
         if ($profiles){
               $this->profileLists()->attach($profiles, ['plan_id' => $this->plan_id]);
         }
-        return  $profiles;
-        
+        return  $profiles;        
     } 
 
     /**
@@ -72,7 +71,14 @@ class PlanList extends Model
         if ($profiles){
               $this->profileLists()->detach($profiles, ['plan_id' => $this->plan_id]);
         }
-        return  $profiles;
-        
+        return  $profiles;        
+    }
+
+    /**
+     * Get the all keywords owns list
+     */
+    public function keywords()
+    {
+       return $this->hasMany('App\Plans\Models\ListKeyword', 'list_id');
     }
 }

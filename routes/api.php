@@ -126,7 +126,9 @@ Route::namespace('Plan')->group(function () {
     Route::post('lists.create', 'PlanListController@createList'); 
     Route::post('lists.update', 'PlanListController@updateList'); 
     Route::post('lists.addprofile', 'PlanListController@addProfiles'); 
-    Route::post('lists.removeprofile', 'PlanListController@removeProfile'); 
+    Route::post('lists.removeprofile', 'PlanListController@removeProfile');
+    
+    Route::post('lists.keywordAnalysis', 'PlanListController@keywordAnalysis');
 
 });
 

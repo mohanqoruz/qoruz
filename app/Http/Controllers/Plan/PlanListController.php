@@ -3,15 +3,16 @@
 namespace App\Http\Controllers\Plan;
 
 use ErrorType;
-use Illuminate\Http\Request;
-
 use App\Rules\CheckProfile;
 
-use App\Plans\Models\PlanList as PlanList;
+use Illuminate\Http\Request;
+
+use App\Plans\Models\ListKeyword;
 use App\Plans\Models\Plan as Plan;
-use App\Plans\Models\ListProfiles as ListProfiles;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use App\Plans\Models\PlanList as PlanList;
+use App\Plans\Models\ListProfiles as ListProfiles;
 
 
 class PlanListController extends Controller
@@ -181,4 +182,48 @@ class PlanListController extends Controller
         ], 200);
         
     }
+    
+    /**
+     * Keyword analysis and get the mentions count owns list
+     */
+    public function keywordAnalysis(Request $request)
+    {
+        // Validating user inputs
+        $validator = Validator::make($request->all(), [
+            'list_id'   => 'required',
+            "topic_name"    => "required|array",
+            "topic_name.*"  => "required|string|distinct",
+            "keywords"    => "required|array",
+            "keywords.*"  => "required|string"
+        ]);
+
+        if ($validator->fails()) {            
+            return response()->json([
+                'ok' => false,
+                'error' => ErrorType::VALIDATION_FAILED,
+                'validation_errors' => $validator->errors()
+            ], 401);
+        }
+
+        $topics =  $request->topic_name;
+        $keywords =  $request->keywords;
+        foreach ($topics as $index => $topic_name) {
+            $list_keyword = ListKeyword::where('list_id', $request->list_id)
+                                        ->where('topic_name', $topic_name)->first();
+            if (! $list_keyword) {
+                $list_keyword = new ListKeyword;
+                $list_keyword->list_id = $request->list_id;
+                $list_keyword->topic_name = $topic_name;             
+            } 
+
+            $list_keyword->keywords = $keywords[$index];
+            $list_keyword->save();
+        }
+
+        return $request->all();
+    }
+
+
+
+
 }

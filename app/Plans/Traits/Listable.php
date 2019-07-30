@@ -29,5 +29,4 @@ trait Listable {
             'owner_id' => $user->id
             ]);
     }
-
 }
