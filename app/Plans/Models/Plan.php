@@ -6,10 +6,11 @@ use App\Sharables\Models\Sharable as Sharable;
 use Illuminate\Database\Eloquent\Model;
 use App\Sharables\Traits\IsSharable;
 use App\Plans\Traits\Listable;
+use App\Plans\Traits\HasProfile;
 
 class Plan extends Model
 {
-     use IsSharable, Listable;
+     use IsSharable, Listable, HasProfile;
 
     /**
      * The table associated with the model.

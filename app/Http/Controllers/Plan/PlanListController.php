@@ -5,9 +5,10 @@ namespace App\Http\Controllers\Plan;
 use ErrorType;
 use Illuminate\Http\Request;
 
+use App\Profiles\Models\Profile as Profile;
 use App\Plans\Models\PlanList as PlanList;
 use App\Plans\Models\Plan as Plan;
-use App\Plans\Models\ListProfiles as ListProfiles;
+use App\Plans\Models\ListProfile as ListProfile;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
@@ -127,7 +128,7 @@ class PlanListController extends Controller
             'list_id'   => 'required',
             'profiles' => 'required'
         ]);
-           
+
         if ($validator->fails()) {            
             return response()->json([
                 'ok' => false,
@@ -136,14 +137,38 @@ class PlanListController extends Controller
             ], 401);
         }
         
-        $list = PlanList::find($request->list_id);
-        $list_result = $list->addProfile($request->profiles);
+        $profiles = trim($request->profiles, ',');
+        $profiles = explode(',',$profiles);
+        
+        $notfound_profile_ids = [];
+        foreach($profiles as $profile) {
+            $profile_exits = Profile::find($profile);
+            if (!$profile_exits) {
+                array_push($notfound_profile_ids, $profile);
+            }
 
+            $list_profile = ListProfile::where('profile_id',$profile)
+            ->where('list_id',$request->list_id)
+            ->first();
+
+            if(!$list_profile){
+                $list = PlanList::find($request->list_id);
+                $list_result = $list->addProfile($profiles);
+            }            
+        }
+
+        if (count($notfound_profile_ids) != 0) {
+            return response()->json([
+                'ok' => true,
+                'warning' => 'profile_not_found',
+                'not_found_profiles' => $notfound_profile_ids
+            ], 200); 
+        }
+        
         return response()->json([
             'ok' => true,
-            'planlist' => $list_result
-        ], 200);
-
+            'stuff' => 'Added Successfully'
+        ], 200);   
     }
 
     /**

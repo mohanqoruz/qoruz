@@ -100,7 +100,7 @@ class UserProfileController extends Controller
             $image = \Image::make($photo);
             $user->profile_image =  $imagename;
             $picture = (string) $image->encode();
-            $s3 = Storage::disk('s3')->put(env('IMAGE_PATH') . $imagename, $picture);
+            $s3 = Storage::disk('s3')->put(env('S3_USER_PROFILE_IMG_PATH') . $imagename, $picture);
 
         }
         $user->name = $request->name;
@@ -142,8 +142,8 @@ class UserProfileController extends Controller
         $image = \Image::make($photo);
         $user->profile_image =  $imagename;
         $picture = (string) $image->encode();
-        // $local = Storage::disk('local')->put(env('IMAGE_PATH') . $imagename, $picture);
-        $s3 = Storage::disk('s3')->put(env('IMAGE_PATH') . $imagename, $picture);
+        // $local = Storage::disk('local')->put(env('S3_USER_PROFILE_IMG_PATH') . $imagename, $picture);
+        $s3 = Storage::disk('s3')->put(env('S3_USER_PROFILE_IMG_PATH') . $imagename, $picture);
 
         $user->save();
 

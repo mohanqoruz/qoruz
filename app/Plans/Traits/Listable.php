@@ -7,21 +7,14 @@ use App\Profiles\Models\Profile;
 
 trait Listable {
 
+    /**
+     * Get the all list owns the plan
+     */
     public function lists()
     {
         return $this->hasMany('App\Plans\Models\PlanList');
     }
-
-    /**
-     * 
-     *
-     * @return  Profile Lists 
-     */
-    public function profileLists()
-    {
-       return $this->belongsToMany(Profile::class, 'q2_list_profiles');
-    } 
-
+    
     /**
      * Create List 
      * @return List $list
@@ -37,33 +30,4 @@ trait Listable {
             ]);
     }
 
-    /**
-     * Add Profiles to List
-     *
-     * @return  Profiles $profiles
-     */
-    public function addProfile($profilesIds)
-    {   
-        
-        $profiles = explode(',',$profilesIds);
-        if ($profiles){
-              $this->profileLists()->attach($profiles, []);
-        }
-        return  $profiles;
-        
-    } 
-
-    /**
-     * Remove Profiles from List
-     * @return  Profiles $profiles
-     */
-    public function removeProfiles($profilesIds)
-    {
-        $profiles = explode(',',$profilesIds);
-        if ($profiles){
-              $this->profileLists()->detach($profiles, []);
-        }
-        return  $profiles;
-        
-    }
 }

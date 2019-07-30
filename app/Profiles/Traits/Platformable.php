@@ -51,4 +51,21 @@ trait Platformable {
     {
         return static::where('handle', $handle)->first();
     }
+
+    /**
+     * Get the url 
+     */
+    public function getUrlAttribute()
+    {
+        return route('profiles.show', ['profile_id' => $this]);
+    }
+
+     /**
+     * Get the handle url 
+     */
+    public function getHandleUrlAttribute()
+    {
+        return route('profiles.show', ['handle' => $this->handle]);
+    }
+ 
 }
