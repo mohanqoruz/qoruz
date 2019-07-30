@@ -2,12 +2,14 @@
 
 namespace App\Plans\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Plans\Traits\Listable;
+use App\Plans\Traits\HasProfile;
+use App\Profiles\Models\Profile;
+use Illuminate\Database\Eloquent\Model;
 
 class PlanList extends Model
 {
-    use Listable;
+    use HasProfile;
     
     /**
      * The table associated with the model.
@@ -32,5 +34,45 @@ class PlanList extends Model
      */
     protected $hidden = [
        
-    ];   
+    ]; 
+
+     
+    /**
+     * 
+     * @return  Profile Lists 
+     */
+    public function profileLists()
+    {
+       return $this->belongsToMany(Profile::class, 'q2_list_profiles', 'list_id');
+    } 
+
+    /**
+     * Add Profiles to List
+     *
+     * @return  Profiles $profiles
+     */
+    public function addProfile($profilesIds)
+    {   
+        
+        $profiles = explode(',',$profilesIds);
+        if ($profiles){
+              $this->profileLists()->attach($profiles, ['plan_id' => $this->plan_id]);
+        }
+        return  $profiles;
+        
+    } 
+
+    /**
+     * Remove Profiles from List
+     * @return  Profiles $profiles
+     */
+    public function removeProfiles($profilesIds)
+    {
+        $profiles = explode(',',$profilesIds);
+        if ($profiles){
+              $this->profileLists()->detach($profiles, ['plan_id' => $this->plan_id]);
+        }
+        return  $profiles;
+        
+    }
 }

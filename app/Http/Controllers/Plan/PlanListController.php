@@ -130,8 +130,8 @@ class PlanListController extends Controller
         $validator = Validator::make($request->all(), [
             'list_id'   => 'required',
             'profiles' => 'required',
-            'profileIds.*' => 'exists:profiles,id',
-            'profileIds' => [ new CheckProfile($request->list_id)],          
+            // 'profileIds.*' => 'exists:profiles,id',
+            // 'profileIds' => [ new CheckProfile($request->list_id)],          
         ]);
         
         if ($validator->fails()) {            

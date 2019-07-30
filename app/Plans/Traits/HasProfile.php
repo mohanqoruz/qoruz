@@ -9,7 +9,7 @@ trait HasProfile {
      */
     public function influencers()
     {
-        return $this->belongsToMany('App\Plans\Models\PlanList');
+        return $this->belongsToMany('App\Plans\Models\Plan');
     }
 
     /**

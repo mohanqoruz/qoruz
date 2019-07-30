@@ -17,7 +17,7 @@ class CreateQ2ListProfilesTable extends Migration
             $table->bigIncrements('id');
 
             $table->unsignedInteger('plan_id');
-            $table->unsignedInteger('plan_list_id');
+            $table->unsignedInteger('list_id');
             $table->unsignedInteger('profile_id');
             $table->jsonb('facebook_delivariables')->nullable(); 
             $table->jsonb('instagram_delivariables')->nullable(); 

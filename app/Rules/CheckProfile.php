@@ -2,7 +2,7 @@
 
 namespace App\Rules;
 
-use App\Plans\Models\ListProfiles as ListProfiles;
+use App\Plans\Models\ListProfile as ListProfile;
 
 use Illuminate\Contracts\Validation\Rule;
 
@@ -30,7 +30,7 @@ class CheckProfile implements Rule
     public function passes($attribute, $value)
     {
         $list_id = $this->extraParam;
-        $result = ListProfiles::where('plan_list_id',$list_id)
+        $result = ListProfile::where('list_id',$list_id)
                     ->whereIn('profile_id',$value)
                     ->get();
                     

@@ -4,7 +4,7 @@ namespace App\Plans\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ListProfiles extends Model
+class ListProfile extends Model
 {
 
     /**
