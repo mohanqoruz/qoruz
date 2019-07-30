@@ -51,12 +51,18 @@ class PlanList extends Model
      *
      * @return  Profiles $profiles
      */
-    public function addProfile($profilesIds)
+    public function addProfile($profilesIds,$request)
     {   
         
-       // $profiles = explode(',',$profilesIds);
         if ($profilesIds){
-              $this->profileLists()->attach($profilesIds, ['plan_id' => $this->plan_id]);
+              $this->profileLists()->attach($profilesIds,[
+                                    'plan_id' => $this->plan_id,
+                                    'facebook_delivariables' => $request->facebook_delivariables,
+                                    'instagram_delivariables' => $request->instagram_delivariables,
+                                    'youtube_delivariables' => $request->youtube_delivariables,
+                                    'twitter_delivariables' => $request->twitter_delivariables,
+                                    'blog_delivariables' => $request->blog_delivariables
+                                ]);
         }
         return  $profilesIds;
         

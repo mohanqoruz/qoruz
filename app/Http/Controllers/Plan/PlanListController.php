@@ -143,18 +143,19 @@ class PlanListController extends Controller
         $notfound_profile_ids = [];
         foreach($profiles as $profile) {
             $profile_exits = Profile::find($profile);
-            if (!$profile_exits) {
+
+            if ($profile_exits) {
+                $list_profile = ListProfile::where('profile_id',$profile)
+                ->where('list_id',$request->list_id)
+                ->first();
+                
+                if(!$list_profile){
+                    $list = PlanList::find($request->list_id);
+                    $list_result = $list->addProfile($profile,$request);
+                }     
+            }  else {
                 array_push($notfound_profile_ids, $profile);
-            }
-
-            $list_profile = ListProfile::where('profile_id',$profile)
-            ->where('list_id',$request->list_id)
-            ->first();
-
-            if(!$list_profile){
-                $list = PlanList::find($request->list_id);
-                $list_result = $list->addProfile($profiles);
-            }            
+            }                   
         }
 
         if (count($notfound_profile_ids) != 0) {
