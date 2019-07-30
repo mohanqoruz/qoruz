@@ -57,8 +57,6 @@ Route::namespace('Api')->group(function () {
     Route::post('users.profile.update', 'UserProfileController@updateProfile');
     Route::post('users.setPhoto', 'UserProfileController@setUserPhoto');
     
-    //Create User By Admin
-    Route::post('users.create', 'UserProfileController@createUser');
 });
 
 /**
@@ -122,11 +120,11 @@ Route::namespace('Plan')->group(function () {
     
     // Plans
     Route::post('plans.create', 'PlanDetailsController@create');
-    Route::get('plans.lists', 'PlanDetailsController@lists');
+    Route::get('plans.lists', 'PlanListController@planLists');
 
     // Lists
-    Route::post('lists.create', 'PlanListController@create'); 
-    Route::post('lists.update', 'PlanListController@update'); 
+    Route::post('lists.create', 'PlanListController@createList'); 
+    Route::post('lists.update', 'PlanListController@updateList'); 
     Route::post('lists.addprofile', 'PlanListController@addProfiles'); 
     Route::post('lists.removeprofile', 'PlanListController@removeProfile'); 
 

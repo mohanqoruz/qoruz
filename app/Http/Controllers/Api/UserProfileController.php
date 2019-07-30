@@ -140,44 +140,4 @@ class UserProfileController extends Controller
 
     }
 
-    /**
-     * Create User by Admin
-     * @return User $user
-     */
-    public function createUser(Request $request)
-    {  
-        $this->authorize('users.create', User::class);
-        // Validating user inputs
-        $validator = Validator::make($request->all(), [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:q2_users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'phone' => ['required', 'string', 'unique:q2_users', 'min:10'],
-            'gender' => ['required', 'string']
-        ]);
-
-        if ($validator->fails()) {            
-            return response()->json([
-                'ok' => false,
-                'error' => $validator->errors()
-            ], 400);
-        } 
-        $account = $request->user()->account; 
-        // Creating user
-        $user = new User;
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = bcrypt($request->password);
-        $user->phone = $request->phone;
-        $user->gender = $request->gender;
-        $user->account_id = $account->id;
-        $user->created_by = $request->user()->id;
-        $user->save();
-
-        return response()->json([
-            'ok' => true,
-            'token' => $user
-        ], 200);
-    }
-
 }

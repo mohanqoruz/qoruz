@@ -18,6 +18,13 @@ class SubscriptionMiddleware
     {
         $account = $request->user()->account;
 
+        if ($account->subcription == '') {
+            return response()->json([
+                'ok' => false,
+                'error' => ErrorType::NO_SUBSCRIPTION
+            ]);
+        }
+
         if (! $account->isSubscriptionActive()) {
             return response()->json([
                 'ok' => false,
