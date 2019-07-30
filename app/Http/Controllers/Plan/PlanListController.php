@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Plan;
 use ErrorType;
 use Illuminate\Http\Request;
 
-use App\Rules\CheckProfile;
-
 use App\Plans\Models\PlanList as PlanList;
 use App\Plans\Models\Plan as Plan;
 use App\Plans\Models\ListProfiles as ListProfiles;
@@ -91,7 +89,7 @@ class PlanListController extends Controller
     {
         // Validating user inputs
        $validator = Validator::make($request->all(), [
-        'list_id'   => 'required',
+        'list_id'   => ['required','exists:q2_lists,id'],
        ]);
     
         if ($validator->fails()) {            
@@ -123,17 +121,13 @@ class PlanListController extends Controller
      */
     public function addProfiles(Request $request)
     {      
-        $profileIds[] = $request->profiles;
-        $request->merge(['profileIds' => $profileIds]);
-
-       // Validating user inputs
+        
+        // Validating user inputs
         $validator = Validator::make($request->all(), [
             'list_id'   => 'required',
-            'profiles' => 'required',
-            'profileIds.*' => 'exists:profiles,id',
-            'profileIds' => [ new CheckProfile($request->list_id)],          
+            'profiles' => 'required'
         ]);
-        
+           
         if ($validator->fails()) {            
             return response()->json([
                 'ok' => false,
