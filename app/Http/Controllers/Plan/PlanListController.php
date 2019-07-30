@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Plan;
 
 use ErrorType;
-use App\Rules\CheckProfile;
-
 use Illuminate\Http\Request;
 
-use App\Plans\Models\ListKeyword;
+use App\Profiles\Models\Profile as Profile;
+use App\Plans\Models\PlanList as PlanList;
 use App\Plans\Models\Plan as Plan;
+use App\Plans\Models\ListProfile as ListProfile;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Plans\Models\PlanList as PlanList;
@@ -92,7 +92,7 @@ class PlanListController extends Controller
     {
         // Validating user inputs
        $validator = Validator::make($request->all(), [
-        'list_id'   => 'required',
+        'list_id'   => ['required','exists:q2_lists,id'],
        ]);
     
         if ($validator->fails()) {            
@@ -124,17 +124,13 @@ class PlanListController extends Controller
      */
     public function addProfiles(Request $request)
     {      
-        $profileIds[] = $request->profiles;
-        $request->merge(['profileIds' => $profileIds]);
-
-       // Validating user inputs
+        
+        // Validating user inputs
         $validator = Validator::make($request->all(), [
             'list_id'   => 'required',
-            'profiles' => 'required',
-            // 'profileIds.*' => 'exists:profiles,id',
-            // 'profileIds' => [ new CheckProfile($request->list_id)],          
+            'profiles' => 'required'
         ]);
-        
+
         if ($validator->fails()) {            
             return response()->json([
                 'ok' => false,
@@ -143,14 +139,39 @@ class PlanListController extends Controller
             ], 401);
         }
         
-        $list = PlanList::find($request->list_id);
-        $list_result = $list->addProfile($request->profiles);
+        $profiles = trim($request->profiles, ',');
+        $profiles = explode(',',$profiles);
+        
+        $notfound_profile_ids = [];
+        foreach($profiles as $profile) {
+            $profile_exits = Profile::find($profile);
 
+            if ($profile_exits) {
+                $list_profile = ListProfile::where('profile_id',$profile)
+                ->where('list_id',$request->list_id)
+                ->first();
+                
+                if(!$list_profile){
+                    $list = PlanList::find($request->list_id);
+                    $list_result = $list->addProfile($profile,$request);
+                }     
+            }  else {
+                array_push($notfound_profile_ids, $profile);
+            }                   
+        }
+
+        if (count($notfound_profile_ids) != 0) {
+            return response()->json([
+                'ok' => true,
+                'warning' => 'profile_not_found',
+                'not_found_profiles' => $notfound_profile_ids
+            ], 200); 
+        }
+        
         return response()->json([
             'ok' => true,
-            'planlist' => $list_result
-        ], 200);
-
+            'stuff' => 'Added Successfully'
+        ], 200);   
     }
 
     /**
