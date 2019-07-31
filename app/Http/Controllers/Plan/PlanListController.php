@@ -11,7 +11,6 @@ use App\Plans\Models\Plan as Plan;
 use App\Plans\Models\ListProfile as ListProfile;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
-use App\Plans\Models\PlanList as PlanList;
 use App\Plans\Models\ListProfiles as ListProfiles;
 
 
